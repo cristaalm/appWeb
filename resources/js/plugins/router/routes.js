@@ -1,0 +1,93 @@
+import useAuthToken from '@/hooks/Auth/useAuthToken'
+import { logoutSesion } from '@/utils/sesion'
+import { ref } from 'vue'
+import Auth from './auth/auth'
+
+
+const flagAuth = ref(false)
+
+export const routes = [
+  {
+    path: '/',
+    component: () => import('@/pages/landing.vue'),
+  },
+  {
+    path: '/',
+    component: () => import('@/layouts/default.vue'),
+    beforeEnter: async (to, from, next) => {
+      next()
+
+      return // evita que se siga ejecutando el código, esto sera temporal
+      const accessToken = localStorage.getItem('access_token')
+
+      if (!accessToken) {
+        next('/login')
+        flagAuth.value = false
+        logoutSesion()
+
+        return
+      } else if (flagAuth.value) {
+        flagAuth.value = false
+        next()
+
+        return
+      }
+
+      // si existe verificamos si el token es válido
+      const { authToken } = useAuthToken()
+      const isValid = await authToken()
+      if (!isValid) {
+        logoutSesion()
+        flagAuth.value = false
+        next('/login')
+        
+        return
+      }
+      flagAuth.value = true
+      next()
+    },
+    children: [
+      {
+        path: 'Panel',
+        component: () => import('@/pages/dashboard/panel.vue'),
+      },
+    ],
+  },
+  {
+    path: '/',
+    component: () => import('@/layouts/blank.vue'),
+    beforeEnter: async (to, from, next) => {
+      next()
+
+      return // evita que se siga ejecutando el código, esto sera temporal
+      const accessToken = localStorage.getItem('access_token')
+  
+      if (!accessToken) {
+        flagAuth.value = false
+        logoutSesion()
+        next()
+      }
+  
+      const { authToken } = useAuthToken()
+      const isValid = await authToken()
+      if (!isValid) {
+        logoutSesion()
+        flagAuth.value = false
+        next()
+          
+        return
+      }
+          
+      localStorage.setItem('user', JSON.stringify(authToken.user))
+      flagAuth.value = true
+      next('/panel')
+    },
+    children: [
+      ...Auth, // Rutas de autenticación
+      {
+        path: '/:pathMatch(.*)*',
+        component: () => import('@/pages/[...error].vue'),
+      },
+    ],
+  },
+]
