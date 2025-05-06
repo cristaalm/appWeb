@@ -7,12 +7,13 @@ abstract class Controller
     /**
      * Formato estándar para respuestas API.
      */
-    protected function apiResponse($status, $message, $data = null, $httpCode = 200)
+    protected function apiResponse($success, $message, $data = null, $errors = null, $code = 200)
     {
         return response()->json([
-            'status' => $status,
+            'success' => $success,
             'message' => $message,
-            'data' => $data
-        ], $httpCode);
+            'data' => $data,
+            'errors' => $errors,
+        ], $code);
     }
 }
