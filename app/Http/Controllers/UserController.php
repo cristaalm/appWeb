@@ -34,11 +34,11 @@ class UserController extends Controller
     {
         try {
             $request->validate([
-                'email' => 'required|email',
+                'user' => 'required',
                 'pass' => 'required',
                 'remember' => 'boolean',
             ]);
-            $user = User::where('email', $request->email)->first();
+            $user = User::where('username', $request->user)->first();
             if (!$user) {
                 return $this->apiResponse(false, 'Correo electrónico o contraseña incorrectos.', null, null, 401);
             }

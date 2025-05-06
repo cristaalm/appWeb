@@ -13,8 +13,7 @@ class User extends Authenticatable
     use HasFactory, Notifiable, HasApiTokens;
 
     protected $table = 'users';
-    protected $primaryKey = 'id_usuario'; // Según tu migración personalizada
-    public $timestamps = false; // Cambia a true si tienes created_at/updated_at
+    public $timestamps = false;
 
     protected $fillable = [
         'username',

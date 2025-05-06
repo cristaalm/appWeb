@@ -14,6 +14,7 @@ abstract class Controller
             'message' => $message,
             'data' => $data,
             'errors' => $errors,
+            'status' => $code,
         ], $code);
     }
 }
