@@ -15,7 +15,7 @@ import { useRouter } from 'vue-router'
  */
 export default function useLogin() {
   const router = useRouter()
-  const user = ref(null)
+  const userRef = ref(null)
   const success = ref(false)
   const error = ref(false)
   const loading = ref(false)
@@ -27,8 +27,8 @@ export default function useLogin() {
     loading.value = false
   }
 
-  const validate = ({ email, pass }) => {
-    if (!email || !pass) {
+  const validate = ({ user, pass }) => {
+    if (!user || !pass) {
       error.value = true
       showToast({ message: 'Por favor, complete los campos', tipo: 'warning' })
       
@@ -39,15 +39,15 @@ export default function useLogin() {
   }
 
   const loginUser = async form => {
-    const { email, pass, remember } = form
-    if (!validate({ email, pass })) return
+    const { user, pass, remember } = form
+    if (!validate({ user, pass })) return
     resetState()
     loading.value = true
     
     try {
-      const response = await AuthLogin({ email, pass, remember })
+      const response = await AuthLogin({ user, pass, remember })
 
-      if (response.status !== 200) {
+      if (!response.success) {
         error.value = true
         showToast({ message: response.message ?? messageError, tipo: 'error', duration: 4000 })
         
@@ -57,7 +57,7 @@ export default function useLogin() {
 
       const data = response.data
       
-      user.value = data.user
+      userRef.value = data.user
       localStorage.setItem('access_token', data.access_token)
       localStorage.setItem('user', JSON.stringify(data.user))
       localStorage.setItem('expires_at', data.expires_at)
@@ -76,7 +76,7 @@ export default function useLogin() {
   }
 
   return {
-    user,
+    user: userRef,
     success,
     error,
     loading,
