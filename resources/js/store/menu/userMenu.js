@@ -6,9 +6,9 @@ const useMenuStore = defineStore('menu', {
   }),
   actions: {
     async loadMenu(user) {
-      if (!user || !user.permissions ) return []
+      if (!user || !user.nivel ) return []
         
-      this.value = user.permissions.includes(1) ? this.adminVelorMenu() : this.userMenu()
+      this.value = user.nivel == 1 ? this.adminVelorMenu() : this.userMenu()
     },
     userMenu() {
       return [
@@ -114,25 +114,40 @@ const useMenuStore = defineStore('menu', {
           icon: 'bx-bxs-dashboard',
           to: '/panel',
         },
-        'Configuración de uniama',
+        'Configuración de AquaNova',
         {
-          title: 'Catalogos',
-          icon: 'bx-purchase-tag-alt',
-          menu: [
-            {
-              title: 'Documentos',
-              to: '/configuracion/catalogos/documentos',
-            },
-            {
-              title: 'Ausencias',
-              to: '/configuracion/catalogos/ausencias',
-            },
-            {
-              title: 'Paises',
-              to: '/configuracion/catalogos/paises',
-            },
-          ],
+          title: 'Usuarios',
+          icon: 'bx-user',
+          to: '/configuracion/usuarios',
         },
+        {
+          title: 'Dispositivos',
+          icon: 'bx-bxs-dashboard',
+          to: '/configuracion/dispositivos',
+        },
+        {
+          title: 'Sistemas',
+          icon: 'bx-bxs-dashboard',
+          to: '/configuracion/sistemas',
+        },
+        // {
+        //   title: 'Catalogos',
+        //   icon: 'bx-purchase-tag-alt',
+        //   menu: [
+        //     {
+        //       title: 'Documentos',
+        //       to: '/configuracion/catalogos/documentos',
+        //     },
+        //     {
+        //       title: 'Ausencias',
+        //       to: '/configuracion/catalogos/ausencias',
+        //     },
+        //     {
+        //       title: 'Paises',
+        //       to: '/configuracion/catalogos/paises',
+        //     },
+        //   ],
+        // },
       ]
     },
   },

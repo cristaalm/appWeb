@@ -9,15 +9,46 @@ const flagAuth = ref(false)
 export const routes = [
   {
     path: '/',
-    component: () => import('@/pages/landing.vue'),
+    component: () => import('@/layouts/blank.vue'),
+    beforeEnter: async (to, from, next) => {
+      const accessToken = localStorage.getItem('access_token')
+  
+      if (!accessToken) {
+        flagAuth.value = false
+        logoutSesion()
+        next()
+      }
+  
+      const { authToken } = useAuthToken()
+      const isValid = await authToken()
+      if (!isValid) {
+        logoutSesion()
+        flagAuth.value = false
+        next()
+          
+        return
+      }
+          
+      localStorage.setItem('user', JSON.stringify(authToken.user))
+      flagAuth.value = true
+      next('/panel')
+    },
+    children: [
+      ...Auth, // Rutas de autenticación
+      {
+        path: '/',
+        component: () => import('@/pages/landing.vue'),
+      },
+      {
+        path: '/:pathMatch(.*)*',
+        component: () => import('@/pages/[...error].vue'),
+      },
+    ],
   },
   {
     path: '/',
     component: () => import('@/layouts/default.vue'),
     beforeEnter: async (to, from, next) => {
-      next()
-
-      return // evita que se siga ejecutando el código, esto sera temporal
       const accessToken = localStorage.getItem('access_token')
 
       if (!accessToken) {
@@ -50,43 +81,6 @@ export const routes = [
       {
         path: 'Panel',
         component: () => import('@/pages/dashboard/panel.vue'),
-      },
-    ],
-  },
-  {
-    path: '/',
-    component: () => import('@/layouts/blank.vue'),
-    beforeEnter: async (to, from, next) => {
-      next()
-
-      return // evita que se siga ejecutando el código, esto sera temporal
-      const accessToken = localStorage.getItem('access_token')
-  
-      if (!accessToken) {
-        flagAuth.value = false
-        logoutSesion()
-        next()
-      }
-  
-      const { authToken } = useAuthToken()
-      const isValid = await authToken()
-      if (!isValid) {
-        logoutSesion()
-        flagAuth.value = false
-        next()
-          
-        return
-      }
-          
-      localStorage.setItem('user', JSON.stringify(authToken.user))
-      flagAuth.value = true
-      next('/panel')
-    },
-    children: [
-      ...Auth, // Rutas de autenticación
-      {
-        path: '/:pathMatch(.*)*',
-        component: () => import('@/pages/[...error].vue'),
       },
     ],
   },

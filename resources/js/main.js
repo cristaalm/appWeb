@@ -1,12 +1,12 @@
 import App from '@/App.vue'
 import { registerPlugins } from '@core/utils/plugins'
 import { createApp } from 'vue'
-import './main.css' // tailwindcss
 
 // Styles
 import '@core-scss/template/index.scss'
 import '@layouts/styles/index.scss'
 import '@styles/styles.scss'
+import './main.css' // tailwindcss
 
 // Create vue app
 const app = createApp(App)

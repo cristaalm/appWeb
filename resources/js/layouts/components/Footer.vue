@@ -7,35 +7,13 @@
       Hecho con
       <VIcon
         icon="bx-heart"
-        color="error"
+        color="#6eb8b7"
         size="1.25rem"
-        class="mx-1"
+        class="mx-1 !text-[#6eb8b7]"
       />
-      Por <a
-        href="https://velor.mx"
-        target="_blank"
-        rel="noopener noreferrer"
-        class="text-primary ms-1"
-      >Velor MX</a>
-    </span>
-    <!-- 👉 Footer: right content -->
-    <span class="d-md-flex gap-x-4 text-primary d-none">
-      <a
-        href="https://velor.mx/license"
-        target="noopener noreferrer"
-      >License</a>
-      <a
-        href="https://velor.mx"
-        target="noopener noreferrer"
-      >More Themes</a>
-      <a
-        href="https://velor.mx/documentation"
-        target="noopener noreferrer"
-      >Documentation</a>
-      <a
-        href="https://velor.mx/support"
-        target="noopener noreferrer"
-      >Support</a>
+      Por <span
+        class="text-[#6eb8b7] ms-1"
+      >AQUANOVA</span>
     </span>
   </div>
 </template>

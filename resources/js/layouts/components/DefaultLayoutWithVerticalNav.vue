@@ -1,15 +1,15 @@
 <script setup>
 import Footer from '@/layouts/components/Footer.vue'
-import NavbarThemeSwitcher from '@/layouts/components/NavbarThemeSwitcher.vue'
 import NavItems from '@/layouts/components/NavItems/NavItems.vue'
-import UserProfile from '@/layouts/components/UserProfile.vue'
 import VerticalNavLayout from '@layouts/components/VerticalNavLayout.vue'
-import { useTheme } from 'vuetify'
+import LoadingIcon from '@/components/Base/LoadingIcon/LoadingIcon.vue'
+import useLogout from '@/hooks/Auth/useLogout'
+import { useThemeSwitcher } from '@/hooks/useThemeSwitcher'
 
-const {
-  name: themeName,
-  global: globalTheme,
-} = useTheme()
+const { loadingLogout, logoutUser } = useLogout()
+const { themeName, changeTheme, globalTheme } = useThemeSwitcher()
+
+const user = JSON.parse(localStorage.getItem('user')) || {}
 </script>
 
 <template>
@@ -30,48 +30,78 @@ const {
           class="cursor-pointer d-flex align-center ms-lg-n3"
           style="user-select: none;"
         >
-          <!-- 👉 Search Trigger button -->
-          <IconBtn>
-            <VIcon icon="bx-search" />
-          </IconBtn>
-
-          <span class="d-none d-md-flex align-center text-disabled ms-2">
-            <span class="me-2">Search</span>
-            <span class="meta-key">&#8984;K</span>
-          </span>
+          <!-- mensaje de bienvenida -->
+          <span class="text-[#20797a] dark:text-[#c5efec] text-3xl font-bold">Bienvenido, {{ user.name }}</span>
         </div>
 
         <VSpacer />
 
-        <IconBtn
-          href="https://github.com/themeselection/sneat-vuetify-vuejs-laravel-admin-template-free"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <VIcon icon="bxl-github" />
-        </IconBtn>
-
         <IconBtn>
-          <VIcon icon="bx-bell" />
+          <VIcon icon="bx-dots-vertical-rounded" />
+          <VMenu activator="parent" width="230" location="bottom end" offset="14px">
+            <VList>
+              <!-- 👉 Configuración -->
+              <VListItem link>
+                <template #prepend>
+                  <VIcon
+                    class="me-2"
+                    icon="bx-cog"
+                    size="22"
+                  />
+                </template>
+                <VListItemTitle>Configuración</VListItemTitle>
+              </VListItem>
+
+              <!-- 👉 Modo oscuro / claro -->
+              <VListItem link @click="changeTheme">
+                <template #prepend>
+                  <VIcon
+                    class="me-2"
+                    :icon="themeName === 'dark' ? 'bx-sun' : 'bx-moon'"
+                    size="22"
+                  />
+                </template>
+                <VListItemTitle>Modo {{ themeName === 'dark' ? 'claro' : 'oscuro' }}</VListItemTitle>
+              </VListItem>
+
+              <VDivider class="my-2" />
+
+              <!-- 👉 Logout -->
+              <VListItem @click.prevent="logoutUser">
+                <template #prepend>
+                  <VIcon
+                    v-if="!loadingLogout"
+                    class="me-2"
+                    icon="bx-log-out"
+                    size="22"
+                  />
+                  <LoadingIcon
+                    v-else
+                    icon="tail-spin"
+                    class="mr-5"
+                  />
+                </template>
+                <VListItemTitle>
+                  Logout
+                </VListItemTitle>
+              </VListItem>
+            </VList>
+          </VMenu>
         </IconBtn>
-
-        <NavbarThemeSwitcher class="me-1" />
-
-        <UserProfile />
       </div>
     </template>
 
     <template #vertical-nav-header="{ toggleIsOverlayNavActive }">
       <RouterLink
-        to="/"
-        class="app-logo app-title-wrapper"
+        to="/panel"
+        class="flex justify-center items-center w-full app-logo app-title-wrapper"
       >
         <!-- eslint-disable vue/no-v-html -->
         <div class="d-flex">
           <img
             :src="globalTheme.name.value == 'dark' ? '/logo-white.png' : '/logo.png'"
-            alt="UNIAMA"
-            :class=" globalTheme.name.value == 'dark' ? 'h-[55px]' : 'h-[60px]'"
+            alt="AQUANOVA"
+            :class=" globalTheme.name.value == 'dark' ? 'h-[160px]' : 'h-[160px]'"
           >
         </div>
       </RouterLink>

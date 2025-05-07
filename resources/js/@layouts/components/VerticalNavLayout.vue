@@ -94,6 +94,7 @@ export default defineComponent({
 
     .navbar-content-container {
       block-size: variables.$layout-vertical-nav-navbar-height;
+      position: relative;
     }
 
     @at-root {

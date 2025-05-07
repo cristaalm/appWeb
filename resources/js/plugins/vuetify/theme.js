@@ -1,5 +1,5 @@
-export const staticPrimaryColor = '#696CFF'
-export const staticPrimaryDarkenColor = '#5E61E6'
+export const staticPrimaryColor = '#6dbab9'
+export const staticPrimaryDarkenColor = '#6dbab9'
 export const themes = {
   light: {
     dark: false,
@@ -7,7 +7,7 @@ export const themes = {
       'primary': staticPrimaryColor,
       'on-primary': '#fff',
       'primary-darken-1': staticPrimaryDarkenColor,
-      'primary-light': '#8789FF',
+      'primary-light': '#8ccccb',
       'secondary': '#8592A3',
       'on-secondary': '#fff',
       'secondary-darken-1': '#788393',
@@ -84,10 +84,10 @@ export const themes = {
   dark: {
     dark: true,
     colors: {
-      'primary': staticPrimaryColor,
+      'primary': "#3a9291",
       'on-primary': '#fff',
       'primary-darken-1': staticPrimaryDarkenColor,
-      'primary-light': '#8789FF',
+      'primary-light': '#8ccccb',
       'secondary': '#8592A3',
       'on-secondary': '#fff',
       'secondary-darken-1': '#788393',
@@ -108,9 +108,9 @@ export const themes = {
       'on-error': '#fff',
       'error-darken-1': '#E6381A',
       'error-light': '#FF654A',
-      'background': '#232333',
+      'background': '#004247',
       'on-background': '#E6E6F1',
-      'surface': '#2B2C40',
+      'surface': '#013134',
       'on-surface': '#E6E6F1',
       'grey-50': '#26293A',
       'grey-100': '#2F3349',
