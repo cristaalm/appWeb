@@ -13,7 +13,7 @@ const props = defineProps({
   },
   email: {
     type: String,
-    required: true, 
+    required: true,
   },
 })
 
@@ -46,46 +46,32 @@ const isConfirmPasswordVisible = ref(false)
 </script>
 
 <template>
-  <div class="justify-center auth-wrapper d-flex align-center pa-4 bg-[url('/images/background.jpg')] bg-cover ">
+  <div class="justify-center auth-wrapper d-flex align-center pa-4 bg-[#e0fffd] ">
     <div class="position-relative my-sm-16">
       <!-- 👉 Top shape -->
-      <VImg
-        :src="authV1TopShape"
-        :class="success ? '!hidden' : ''"
-        class="text-primary auth-v1-top-shape !absolute d-none d-sm-block"
-      />
+      <VImg :src="authV1TopShape" :class="success ? '!hidden' : ''"
+        class="text-primary auth-v1-top-shape !absolute d-none d-sm-block" />
 
       <!-- 👉 Bottom shape -->
-      <VImg
-        :src="authV1BottomShape"
-        :class="success ? '!hidden' : ''"
-        class="text-primary auth-v1-bottom-shape !absolute d-none d-sm-block"
-      />
+      <VImg :src="authV1BottomShape" :class="success ? '!hidden' : ''"
+        class="text-primary auth-v1-bottom-shape !absolute d-none d-sm-block" />
 
       <!-- 👉 Auth Card -->
-      <VCard
-        class="auth-card"
+      <VCard class="auth-card"
         :class="[success ? 'animate-scaleDown mt-[120px]' : 'animate-scaleUp', $vuetify.display.smAndUp ? 'pa-6' : 'pa-0']"
-        max-width="460"
-      >
+        max-width="460">
         <VCardItem class="justify-center">
-          <RouterLink
-            to="/"
-            class="app-logo"
-          >
+          <RouterLink to="/" class="app-logo">
             <div class="d-flex">
-              <img
-                src="/logo.png"
-                alt="UNIAMA"
-                class="w-[200px] mr-2"  
-              >
+              <img src="/logo.png" alt="UNIAMA" class="w-[200px] mr-2">
             </div>
           </RouterLink>
         </VCardItem>
 
         <VCardText>
           <h4 class="relative mb-1 text-h4">
-            Restablecer Contraseña <span class="absolute ml-2 text-4xl transition-all duration-200 transform animate-wave -top-2">🔐</span>
+            Restablecer Contraseña <span
+              class="absolute ml-2 text-4xl transition-all duration-200 transform animate-wave -top-2">🔐</span>
           </h4>
           <p class="mb-0">
             Ingresa tu nueva contraseña para restablecer el acceso a tu cuenta.
@@ -97,38 +83,24 @@ const isConfirmPasswordVisible = ref(false)
             <VRow>
               <!-- new password -->
               <VCol cols="12">
-                <VTextField
-                  v-model="form.newPassword"
-                  label="Nueva Contraseña"
-                  placeholder="**********"
-                  :type="isPasswordVisible ? 'text' : 'password'"
-                  autocomplete="password"
+                <VTextField v-model="form.newPassword" label="Nueva Contraseña" placeholder="**********"
+                  :type="isPasswordVisible ? 'text' : 'password'" autocomplete="password"
                   :append-inner-icon="isPasswordVisible ? 'bx-hide' : 'bx-show'"
-                  @click:append-inner="isPasswordVisible = !isPasswordVisible"
-                />
+                  @click:append-inner="isPasswordVisible = !isPasswordVisible" />
               </VCol>
 
               <!-- confirm password -->
               <VCol cols="12">
-                <VTextField
-                  v-model="form.confirmPassword"
-                  label="Confirmar Contraseña"
-                  placeholder="**********"
-                  :type="isConfirmPasswordVisible ? 'text' : 'password'"
-                  autocomplete="password"
+                <VTextField v-model="form.confirmPassword" label="Confirmar Contraseña" placeholder="**********"
+                  :type="isConfirmPasswordVisible ? 'text' : 'password'" autocomplete="password"
                   :append-inner-icon="isConfirmPasswordVisible ? 'bx-hide' : 'bx-show'"
-                  @click:append-inner="isConfirmPasswordVisible = !isConfirmPasswordVisible"
-                />
+                  @click:append-inner="isConfirmPasswordVisible = !isConfirmPasswordVisible" />
               </VCol>
 
               <!-- submit button -->
               <VCol cols="12">
-                <VBtn
-                  block
-                  type="submit"
-                  :disabled="loading || !form.newPassword || !form.confirmPassword || success"
-                  @click="resetPassword(form)"
-                >
+                <VBtn block type="submit" :disabled="loading || !form.newPassword || !form.confirmPassword || success"
+                  @click="resetPassword(form)">
                   <span v-if="loading">
                     <LoadingIcon icon="three-dots" />
                   </span>
@@ -136,14 +108,8 @@ const isConfirmPasswordVisible = ref(false)
                     Restablecer Contraseña
                   </span>
                 </VBtn>
-                <VBtn
-                  block
-                  type="button"
-                  variant="text"
-                  :disabled="loading"
-                  class="mt-4"
-                  @click="router.push('/login')"
-                >
+                <VBtn block type="button" variant="text" :disabled="loading" class="mt-4"
+                  @click="router.push('/login')">
                   Regresar
                 </VBtn>
               </VCol>
@@ -151,39 +117,25 @@ const isConfirmPasswordVisible = ref(false)
           </VForm>
         </VCardText>
       </VCard>
-      <VCard
-        class="auth-card"
-        :class="[success ? 'animate-scaleUp' : '!hidden', $vuetify.display.smAndUp ? 'pa-6' : 'pa-0']"
-        max-width="460"
-      >
+      <VCard class="auth-card"
+        :class="[success ? 'animate-scaleUp' : '!hidden', $vuetify.display.smAndUp ? 'pa-6' : 'pa-0']" max-width="460">
         <div class="text-center pa-6">
-          <VAvatar
-            size="80"
-            color="primary"
-            class="p-3 mb-4"
-          >
-            <Lucide
-              icon="CircleCheckBig"
-              class="w-full h-full"
-            />
+          <VAvatar size="80" color="primary" class="p-3 mb-4">
+            <Lucide icon="CircleCheckBig" class="w-full h-full" />
           </VAvatar>
-        
+
           <h2 class="mb-2 !text-3xl !font-bold text-h5">
             ¡Contraseña Restablecida!
           </h2>
-        
+
           <p class="mb-6 text-body-1 !text-xl">
             Tu contraseña ha sido restablecida con éxito.
             <br>
             Ahora puedes iniciar sesión con tu nueva contraseña.
           </p>
 
-          <VBtn
-            block
-            color="primary"
-            @click="router.push('/')"
-          >
-            Ir al Inicio
+          <VBtn block color="primary" @click="router.push('/login')">
+            Ir al inicio de sesión
           </VBtn>
         </div>
       </VCard>

@@ -34,13 +34,13 @@
                   color: #ffffff;
                   font-size: 24px;
                 ">
-              UNIAMA
+              AQUANOVA
             </td>
           </tr>
           <tr>
             <td style="padding: 30px; color: #333">
               <h2 style="margin-top: 0">
-                Hola {{ explode(' ', $user->first_name)[0] ?? 'usuario' }} 👋
+                Hola {{ explode(' ', $user->name)[0] ?? 'usuario' }} 👋
               </h2>
               <p>Recibimos una solicitud para restablecer tu contraseña.</p>
               <p style="text-align: center; margin: 30px 0">
@@ -61,7 +61,7 @@
                 Si no solicitaste este cambio, puedes ignorar este mensaje.
               </p>
               <p style="margin-bottom: 0">
-                Saludos,<br />El equipo de UNIAMA
+                Saludos,<br />El equipo de AQUANOVA
               </p>
             </td>
           </tr>
@@ -74,7 +74,7 @@
                   font-size: 12px;
                   color: #777;
                 ">
-              © {{ date('Y') }} UNIAMA. Todos los derechos reservados.
+              © {{ date('Y') }} AQUANOVA. Todos los derechos reservados.
             </td>
           </tr>
         </table>
