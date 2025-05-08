@@ -5,7 +5,7 @@ import CardSystem from './cardSystem.vue'
 import CreateSystem from './newSystemModal'
 import UpdateSystem from './updateSystemModal'
 import useAllSistemas from '@/hooks/Sistemas/useAllSistemas'
-import DeleteSystem from './deleteSystemModal.vue'
+import DeleteSystem from './DeleteSystemModal.vue'
 
 const { sistemas, loading, loadAllSistemas, first } = useAllSistemas()
 const filtro = ref('')
