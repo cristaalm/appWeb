@@ -54,7 +54,7 @@ const isPasswordVisible = ref(false)
         <div class="w-full md:w-1/2">
           <VCardText>
             <h4 class="relative mb-1 text-h4 text-[#20797a] font-bold">
-              ¡Bienvenido a AQUANOVA! <span class="hidden absolute -top-2 ml-2 text-4xl transition-all duration-200 transform animate-wave md:block">👋🏻</span>
+              ¡Bienvenido a AQUANOVA! <span class="hidden absolute -top-2 ml-2 text-4xl transition-all duration-200 transform md:inline-block animate-wave">👋🏻</span>
             </h4>
             <p class="mb-0">
               Inicie sesión en su cuenta para continuar.
