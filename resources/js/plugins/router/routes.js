@@ -83,6 +83,14 @@ export const routes = [
       {
         path: 'sistemas',
         component: () => import('@/pages/dashboard/sistema/sistemaView.vue'),
+      },
+      {
+        path: 'dispositivos',
+        component: () => import('@/pages/dashboard/dispositivos/devicesView.vue'),
+      },
+      {
+        path: 'usuarios',
+        component: () => import('@/pages/dashboard/usuarios/usersView.vue'),
       }
     ],
   },

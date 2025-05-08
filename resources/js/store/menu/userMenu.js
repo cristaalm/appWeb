@@ -111,26 +111,26 @@ const useMenuStore = defineStore('menu', {
       return [
         {
           title: 'Panel',
-          icon: 'bx-bxs-dashboard',
+          icon: 'bx bxs-dashboard',
           to: '/panel',
         },
         'Configuración de AquaNova',
         {
           title: 'Usuarios',
-          icon: 'bx-user',
+          icon: 'bx bxs-user-detail', // Más representativo para gestión de usuarios
           to: '/panel/usuarios',
         },
         {
           title: 'Dispositivos',
-          icon: 'bx-bxs-dashboard',
+          icon: 'bx bxs-chip', // Representa hardware o dispositivos electrónicos
           to: '/panel/dispositivos',
         },
         {
           title: 'Sistemas',
-          icon: 'bx-bxs-dashboard',
+          icon: 'bx bxs-cog', // Representa configuración o sistemas
           to: '/panel/sistemas',
         },
-      ]
+      ];
     },
   },
 })

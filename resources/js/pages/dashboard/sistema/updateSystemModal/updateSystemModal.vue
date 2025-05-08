@@ -161,7 +161,7 @@ const saveNewSystem = async () => {
                   class="object-cover w-28 h-28 rounded-full border-4 shadow-lg transition-all duration-200 border-primary-500 group-hover:scale-105 group-hover:shadow-2xl"
                 />
                 <div class="absolute right-0 bottom-0 p-1 rounded-full border border-gray-200 shadow-md bg-slate-500">
-                  <VIcon icon="bx-camera" size="20" class="text-primary-500" />
+                  <VIcon icon="bx-camera" size="20" class="text-primary-500 dark:text-white" />
                 </div>
                 <!-- Botón de eliminar imagen -->
                 <button
@@ -180,7 +180,7 @@ const saveNewSystem = async () => {
                 <div
                   class="absolute right-0 bottom-0 p-1 bg-[#284b53] rounded-full border border-white shadow-md"
                 >
-                  <VIcon icon="bx-camera" size="20" class="text-white" />
+                  <VIcon icon="bx-camera" size="20" class="text-black dark:text-white" />
                 </div>
               </div>
             </div>
