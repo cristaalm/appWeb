@@ -108,9 +108,9 @@ module.exports = {
       addBase({
         // Default colors
         ':root': {
-          '--color-theme-1': toRGB('#03045e'),
-          '--color-theme-2': toRGB('#0c4a6e'),
-          '--color-theme-3': toRGB('#0077b6'),
+          '--color-theme-1': toRGB('#21797a'),
+          '--color-theme-2': toRGB('#4ca4a5'),
+          '--color-theme-3': toRGB('#81c784'),
           '--v-theme-primary': toRGB('#03045e'),
           '--v-theme-secondary': toRGB(colors.slate['200']),
           '--v-theme-success': toRGB(colors.teal['600']),

@@ -118,36 +118,18 @@ const useMenuStore = defineStore('menu', {
         {
           title: 'Usuarios',
           icon: 'bx-user',
-          to: '/configuracion/usuarios',
+          to: '/panel/usuarios',
         },
         {
           title: 'Dispositivos',
           icon: 'bx-bxs-dashboard',
-          to: '/configuracion/dispositivos',
+          to: '/panel/dispositivos',
         },
         {
           title: 'Sistemas',
           icon: 'bx-bxs-dashboard',
-          to: '/configuracion/sistemas',
+          to: '/panel/sistemas',
         },
-        // {
-        //   title: 'Catalogos',
-        //   icon: 'bx-purchase-tag-alt',
-        //   menu: [
-        //     {
-        //       title: 'Documentos',
-        //       to: '/configuracion/catalogos/documentos',
-        //     },
-        //     {
-        //       title: 'Ausencias',
-        //       to: '/configuracion/catalogos/ausencias',
-        //     },
-        //     {
-        //       title: 'Paises',
-        //       to: '/configuracion/catalogos/paises',
-        //     },
-        //   ],
-        // },
       ]
     },
   },

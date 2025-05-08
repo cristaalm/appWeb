@@ -26,14 +26,19 @@ export default function useLogout() {
     loadingLogout.value = false
   }
 
-  const nextLogout = () => {
+  const nextLogout = (logoutMode = null) => {
     localStorage.removeItem('access_token')
     localStorage.removeItem('user')
     localStorage.removeItem('expires_at')
+    
+    if (typeof logoutMode === 'function') {
+      logoutMode()
+    }
+    
     router.push('/login')
   }
 
-  const logoutUser = async () => {
+  const logoutUser = async (logoutMode = null) => {
     resetState()
     loadingLogout.value = true
 
@@ -41,9 +46,8 @@ export default function useLogout() {
     if (!token) {
       errorLogout.value = true
       showToast({ message: 'No tiene una sesión activa', tipo: 'error', duration: 4000 })
-      nextLogout()
-      
-      return
+      nextLogout(logoutMode)
+      return false
     }
 
     try {
@@ -53,11 +57,11 @@ export default function useLogout() {
         errorLogout.value = true
         showToast({ message: response.message ?? messageError, tipo: 'error', duration: 4000 })
         
-        return
+        return false
       }
       successLogout.value = true
       showToast({ message: 'Sesión cerrada correctamente', tipo: 'success', duration: 4000 })
-      nextLogout()
+      nextLogout(logoutMode)
       
     } catch (error) {
       errorLogout.value = true

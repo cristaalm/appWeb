@@ -6,8 +6,8 @@ import LoadingIcon from '@/components/Base/LoadingIcon/LoadingIcon.vue'
 import useLogout from '@/hooks/Auth/useLogout'
 import { useThemeSwitcher } from '@/hooks/useThemeSwitcher'
 
+const { themeName, changeTheme, globalTheme, logoutMode } = useThemeSwitcher()
 const { loadingLogout, logoutUser } = useLogout()
-const { themeName, changeTheme, globalTheme } = useThemeSwitcher()
 
 const user = JSON.parse(localStorage.getItem('user')) || {}
 </script>
@@ -31,12 +31,12 @@ const user = JSON.parse(localStorage.getItem('user')) || {}
           style="user-select: none;"
         >
           <!-- mensaje de bienvenida -->
-          <span class="text-[#20797a] dark:text-[#c5efec] text-3xl font-bold">Bienvenido, {{ user.name }}</span>
+          <span class="text-[#20797a] dark:text-[#c5efec] mb-[2px] ml-2 text-xl md:text-3xl font-bold">Bienvenido, {{ user.name }}</span>
         </div>
 
         <VSpacer />
 
-        <IconBtn>
+        <IconBtn :disabled="loadingLogout" :loading="loadingLogout">
           <VIcon icon="bx-dots-vertical-rounded" />
           <VMenu activator="parent" width="230" location="bottom end" offset="14px">
             <VList>
@@ -67,7 +67,7 @@ const user = JSON.parse(localStorage.getItem('user')) || {}
               <VDivider class="my-2" />
 
               <!-- 👉 Logout -->
-              <VListItem @click.prevent="logoutUser">
+              <VListItem @click.prevent="()=>{logoutUser(logoutMode)}">
                 <template #prepend>
                   <VIcon
                     v-if="!loadingLogout"

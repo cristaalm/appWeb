@@ -17,6 +17,7 @@ export const routes = [
         flagAuth.value = false
         logoutSesion()
         next()
+        return
       }
   
       const { authToken } = useAuthToken()
@@ -25,13 +26,13 @@ export const routes = [
         logoutSesion()
         flagAuth.value = false
         next()
-          
         return
       }
           
       localStorage.setItem('user', JSON.stringify(authToken.user))
       flagAuth.value = true
       next('/panel')
+      return
     },
     children: [
       ...Auth, // Rutas de autenticación
@@ -46,7 +47,7 @@ export const routes = [
     ],
   },
   {
-    path: '/',
+    path: '/panel',
     component: () => import('@/layouts/default.vue'),
     beforeEnter: async (to, from, next) => {
       const accessToken = localStorage.getItem('access_token')
@@ -59,9 +60,6 @@ export const routes = [
         return
       } else if (flagAuth.value) {
         flagAuth.value = false
-        next()
-
-        return
       }
 
       // si existe verificamos si el token es válido
@@ -79,9 +77,13 @@ export const routes = [
     },
     children: [
       {
-        path: 'Panel',
+        path: '',
         component: () => import('@/pages/dashboard/panel.vue'),
       },
+      {
+        path: 'sistemas',
+        component: () => import('@/pages/dashboard/sistema/sistemaView.vue'),
+      }
     ],
   },
 ]
