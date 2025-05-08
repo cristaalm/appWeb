@@ -1,8 +1,8 @@
 <script setup>
 import LoadingIcon from '@/components/Base/LoadingIcon/'
 import useForgotPass from '@/hooks/Auth/useForgotPass'
-import authV1BottomShape from '@images/svg/auth-v1-bottom-shape.svg?url'
-import authV1TopShape from '@images/svg/auth-v1-top-shape.svg?url'
+import authV1BottomShape from '@images/icons/login/8.png?url'
+import authV1TopShape from '@images/icons/login/1.png?url'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
@@ -18,11 +18,11 @@ const form = ref({
     <div class="position-relative my-sm-16">
       <!-- 👉 Top shape -->
       <VImg :src="authV1TopShape" :class="success ? '!hidden' : ''"
-        class="text-primary auth-v1-top-shape !absolute d-none d-sm-block" />
+        class="text-primary auth-v1-top-shape !absolute d-none d-sm-block transform rotate-90 opacity-70" />
 
       <!-- 👉 Bottom shape -->
       <VImg :src="authV1BottomShape" :class="success ? '!hidden' : ''"
-        class="text-primary auth-v1-bottom-shape !absolute d-none d-sm-block" />
+        class="text-primary auth-v1-bottom-shape !absolute d-none d-sm-block transform -rotate-90 opacity-70" />
 
       <!-- 👉 Auth Card -->
       <VCard class="auth-card"
@@ -39,7 +39,7 @@ const form = ref({
         <VCardText>
           <h4 class="relative mb-1 text-h4">
             ¿Olvidaste tu contraseña? <span
-              class="absolute ml-2 text-4xl transition-all duration-200 transform animate-wave -top-2">🔒</span>
+              class="absolute -top-2 ml-2 text-4xl transition-all duration-200 transform animate-wave">🔒</span>
           </h4>
           <p class="mb-0">
             Ingresa tu correo electrónico para solicitar un cambio de contraseña.
