@@ -1,3 +1,3 @@
-import UpdateSystemModal from './UpdateSystemModal.vue'
+import UpdateSystemModal from './updateSystemModal.vue'
 
 export default UpdateSystemModal
