@@ -54,6 +54,9 @@ RUN mkdir -p storage/framework/views storage/framework/cache storage/framework/s
     && chmod -R 777 storage bootstrap/cache \
     && chown -R www-data:www-data storage bootstrap/cache
 
+# Crear el symlink de public/storage → storage/app/public
+RUN php artisan storage:link
+
 # Asegura permisos (solo para desarrollo)
 RUN chmod -R 777 /var/www/html \
     && chown -R www-data:www-data /var/www/html
