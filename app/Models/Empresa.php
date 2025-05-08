@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
 
 class Empresa extends Model
 {
@@ -10,6 +11,7 @@ class Empresa extends Model
 
     protected $table = 'empresa';
     protected $primaryKey = 'id_empresa';
+    protected $appends = ['logotipo_url'];
     public $timestamps = false;
 
     protected $fillable = [
@@ -19,7 +21,9 @@ class Empresa extends Model
         'telefono',
         'logotipo',
         'fecha_ingreso',
+        'estado',
     ];
+    
 
     // Relaciones
     public function usuarios()
@@ -37,5 +41,9 @@ class Empresa extends Model
     public function contenedores()
     {
         return $this->hasMany(Contenedor::class, 'id_empresa', 'id_empresa');
+    }
+    public function getLogotipoUrlAttribute()
+    {
+        return $this->logotipo ? Storage::url($this->logotipo) : null;
     }
 }
