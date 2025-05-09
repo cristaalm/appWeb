@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmpresaController;
+use App\Http\Controllers\DispositivoController;
 // Rutas protegidas por autenticación
 
 // protegemos estas rutas con sanctum
@@ -17,12 +18,19 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('update', [EmpresaController::class, 'update']); // path: /api/empresa/update
         Route::post('delete', [EmpresaController::class, 'delete']); // path: /api/empresa/delete
     });
+
+    Route::prefix('dispositivo')->group(function () {
+        Route::get('all', [DispositivoController::class, 'getAll']); // path: /api/dispositivo/all
+        Route::post('update', [DispositivoController::class, 'update']); // path: /api/dispositivo/update
+    });
 });
 
 Route::prefix('historial')->group(function () {
     Route::get('connect', [HistorialController::class, 'connect']); // path: /api/historial/connect
     Route::post('sync', [HistorialController::class, 'setLogHistorial']); // path: /api/historial/sync
 });
+
+
 
 Route::prefix('auth')->group(function () {
     Route::post('login', [UserController::class, 'login']); // path: /api/auth/login

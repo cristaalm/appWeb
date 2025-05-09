@@ -1,13 +1,12 @@
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, inject } from 'vue'
 import LoadingIcon from '@/components/Base/LoadingIcon'
 import CardSystem from './cardSystem.vue'
 import CreateSystem from './newSystemModal'
 import UpdateSystem from './updateSystemModal'
-import useAllSistemas from '@/hooks/Sistemas/useAllSistemas'
 import DeleteSystem from './deleteSystemModal'
 
-const { sistemas, loading, loadAllSistemas, first } = useAllSistemas()
+const { sistemas, loading, loadAllSistemas, first } = inject('sistemas')
 const filtro = ref('')
 const activeTab = ref('todos')
 

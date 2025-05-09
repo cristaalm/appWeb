@@ -120,6 +120,8 @@ module.exports = {
           '--v-theme-danger': toRGB(colors.red['700']),
           '--color-light': toRGB(colors.slate['100']),
           '--color-dark': toRGB(colors.slate['800']), 
+          '--dark-dashboard': '#013134',
+          '--dark-background': '#004247',
         },
 
         // Default dark-mode colors
