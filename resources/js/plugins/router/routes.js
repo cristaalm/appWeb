@@ -38,7 +38,7 @@ export const routes = [
       ...Auth, // Rutas de autenticación
       {
         path: '/',
-        component: () => import('@/pages/landing.vue'),
+        component: () => import('@/pages/LandingPage.vue'),
       },
       {
         path: '/:pathMatch(.*)*',
