@@ -28,8 +28,23 @@ module.exports = {
         wave: 'wave 1.5s infinite',
         scaleDown: 'scaleDown .5s forwards',
         scaleUp: 'scaleUp 1s forwards',
+        fadeIn: 'fadeIn 1s ease-in-out',
+        fadeInUp: 'fadeInUp 0.8s ease-out forwards',
+        slideInLeft: 'slideInLeft 0.8s ease-out forwards',
       },
       keyframes: {
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' }
+        },
+        fadeInUp: {
+          '0%': { opacity: '0', transform: 'translateY(20px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' }
+        },
+        slideInLeft: {
+          '0%': { opacity: '0', transform: 'translateX(-20px)' },
+          '100%': { opacity: '1', transform: 'translateX(0)' }
+        },
         'scale-in': {
           '0%': { transform: 'scale(3.5)' },
           '100%': { transform: 'scale(1)' },
@@ -101,7 +116,30 @@ module.exports = {
           'background': '#4ca4a5',
           'border-radius': '8px',
         },
+        '.font-poppins': {
+          fontFamily: "'Poppins', sans-serif",
+        },
+        '.nav-link::after': {
+          content: "''",
+          position: 'absolute',
+          width: '0',
+          height: '2px',
+          bottom: '-2px',
+          left: '0',
+          backgroundColor: '#008080',
+          transition: 'width 0.3s ease',
+        },
+        '.nav-link:hover::after': {
+          width: '100%',
+        },
       });
+      addUtilities({
+        '.container': {
+          width: '100%',
+          paddingLeft: '1rem',
+          paddingRight: '1rem',
+        }
+      }, ['responsive']);
     }),
     // require('@tailwindcss/forms'),
     plugin(function ({ addBase, matchUtilities }) {
