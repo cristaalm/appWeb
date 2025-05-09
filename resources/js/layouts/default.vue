@@ -1,11 +1,14 @@
 <script setup>
 import DefaultLayoutWithVerticalNav from './components/DefaultLayoutWithVerticalNav.vue'
+import ProviderLayer from '@/components/ProviderLayer.vue'
 </script>
 
 <template>
-  <DefaultLayoutWithVerticalNav>
-    <RouterView />
-  </DefaultLayoutWithVerticalNav>
+  <ProviderLayer>
+    <DefaultLayoutWithVerticalNav>
+      <RouterView />
+    </DefaultLayoutWithVerticalNav>
+  </ProviderLayer>
 </template>
 
 <style lang="scss">
