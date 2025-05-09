@@ -17,7 +17,6 @@ class Dispositivo extends Model
         'requiere_contenedor',
         'tiempo_batido',
         'estado',
-        'sync',
     ];
 
     // Relaciones
