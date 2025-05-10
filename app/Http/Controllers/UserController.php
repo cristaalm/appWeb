@@ -14,149 +14,123 @@ use \Exception;
 class UserController extends Controller
 {
 
-
-    public function passHash(Request $request)
+    public function register(Request $request)
     {
         try {
             $request->validate([
-                'pass' => 'required',
+                'username' => 'required|string|max:255|unique:users',
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users',
+                'password' => 'required|string|min:8|confirmed',
+                'nivel' => 'required|integer|in:1,2,3',
+                'id_empresa' => 'required|integer',
             ]);
-            $hashedPassword = Hash::make($request->pass);
-            return $this->apiResponse(true, 'Hash generado correctamente.', ['hashed_password' => $hashedPassword], null, 200);
+
+            if ( $request->nivel == 1  && $request->id_empresa != 1) {
+                return $this->apiResponse(false, 'No tienes permiso para registrar un usuario con nivel 1.', null, null, 400);
+            }
+            
+            $user = User::create([
+                'username' => $request->username,
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($request->password),
+                'nivel' => $request->nivel,
+                'id_empresa' => $request->id_empresa,
+            ]);
+            return $this->apiResponse(true, 'Usuario registrado correctamente.', ['user' => $user], null, 201);
         } catch (ValidationException $e) {
-            return $this->apiResponse(false, 'Datos inválidos para generar hash.', null, $e->errors(), 422);
+            return $this->apiResponse(false, 'Datos inválidos para registrar el usuario.', null, $e->errors(), 422);
         } catch (Exception $e) {
-            return $this->apiResponse(false, 'Ocurrió un error inesperado al generar el hash.', null, $e->getMessage(), 500);
+            return $this->apiResponse(false, 'Ocurrió un error inesperado al registrar el usuario.', null, $e->getMessage(), 500);
         }
     }
 
-    public function login(Request $request)
+    public function update(Request $request)
     {
         try {
             $request->validate([
-                'user' => 'required',
-                'pass' => 'required',
-                'remember' => 'boolean',
+                'id' => 'required|integer',
+                'username' => 'required|string|max:255|unique:users',
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:users',
+                'nivel' => 'required|integer|in:1,2,3',
+                'id_empresa' => 'required|integer',
             ]);
-            $user = User::where('username', $request->user)->first();
+
+            $user = User::find($request->id);
             if (!$user) {
-                return $this->apiResponse(false, 'Usuario o contraseña incorrectos.', null, null, 401);
+                return $this->apiResponse(false, 'Usuario no encontrado.', null, null, 404);
             }
-            // Si tienes algún campo de estado (activo/inactivo) puedes validarlo aquí:
-            if (isset($user->estado) && $user->estado != 1) {
-                return $this->apiResponse(false, 'El usuario no está activo.', null, null, 403);
+
+            if ( $request->nivel == 1  && $request->id_empresa != 1) {
+                return $this->apiResponse(false, 'No tienes permiso para registrar un usuario con nivel 1.', null, null, 400);
             }
-            if (!Hash::check($request->pass, $user->password)) {
-                return $this->apiResponse(false, 'Usuario o contraseña incorrectos.', null, null, 401);
-            }
-            $expiresAt = $request->remember
-                ? Carbon::now()->addYear()
-                : (config('sanctum.expiration') ? Carbon::now()->addMinutes(config('sanctum.expiration')) : null);
-            $tokenResult = $user->createToken('auth-token', [], $expiresAt);
-            return $this->apiResponse(true, 'Inicio de sesión exitoso.', [
-                'access_token' => $tokenResult->plainTextToken,
-                'user' => $user,
-                'nivel' => $user->nivel,
-                'expires_at' => $expiresAt,
-            ], null, 200);
+
+            $user->username = $request->username;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->nivel = $request->nivel;
+            $user->id_empresa = $request->id_empresa;
+            $user->save();
+            return $this->apiResponse(true, 'Usuario actualizado correctamente.', ['user' => $user], null, 200);
         } catch (ValidationException $e) {
-            return $this->apiResponse(false, 'Datos de acceso inválidos.', null, $e->errors(), 422);
+            return $this->apiResponse(false, 'Datos inválidos para actualizar el usuario.', null, $e->errors(), 422);
         } catch (Exception $e) {
-            return $this->apiResponse(false, 'Ocurrió un error inesperado al iniciar sesión.', null, $e->getMessage(), 500);
+            return $this->apiResponse(false, 'Ocurrió un error inesperado al actualizar el usuario.', null, $e->getMessage(), 500);
         }
     }
 
-    public function logout(Request $request)
-    {
-        $token = $request->bearerToken();
-        if (!$token) {
-            return $this->apiResponse(false, 'Token de autenticación no proporcionado.', null, null, 401);
-        }
-        $accessToken = PersonalAccessToken::findToken($token);
-        if (!$accessToken) {
-            return $this->apiResponse(false, 'Token inválido o no encontrado.', null, null, 401);
-        }
-        $accessToken->delete();
-        return $this->apiResponse(true, 'Sesión cerrada correctamente.', null, null, 200);
-    }
-
-    public function validateToken(Request $request)
-    {
-        try {
-            $token = $request->bearerToken();
-            if (!$token) {
-                return $this->apiResponse(false, 'Token no proporcionado', null, null, 401);
-            }
-            $accessToken = PersonalAccessToken::findToken($token);
-            if (!$accessToken) {
-                return $this->apiResponse(false, 'Token inválido', null, null, 401);
-            }
-            if ($accessToken->expires_at && $accessToken->expires_at->isPast()) {
-                $accessToken->delete();
-                return $this->apiResponse(false, 'Token expirado', null, null, 401);
-            }
-            // Si tienes permisos o roles, puedes agregarlos aquí como en el ejemplo original.
-            return $this->apiResponse(true, 'Token válido', [
-                'user' => $accessToken->tokenable,
-                'nivel' => $accessToken->tokenable->nivel,
-                'expires_at' => $accessToken->expires_at,
-            ], null, 200);
-        } catch (\Exception $e) {
-            return $this->apiResponse(false, 'Error al validar el token', null, $e->getMessage(), 500);
-        }
-    }
-
-    public function forgotPassword(Request $request)
+    public function delete(Request $request)
     {
         try {
             $request->validate([
-                'email' => 'required|email',
+                'id' => 'required|integer',
             ]);
-            $user = User::where('email', $request->email)->first();
+
+            $user = User::find($request->id);
             if (!$user) {
-                return $this->apiResponse(false, 'El correo electrónico no está registrado en el sistema.', null, null, 404);
+                return $this->apiResponse(false, 'Usuario no encontrado.', null, null, 404);
             }
-            $status = Password::sendResetLink(
-                $request->only('email')
-            );
-            if ($status === Password::RESET_LINK_SENT) {
-                return $this->apiResponse(true, 'Enlace de restablecimiento de contraseña enviado correctamente.', null, null, 200);
-            }
-            throw ValidationException::withMessages([
-                'email' => [__($status)],
-            ]);
+            $user->delete();
+            return $this->apiResponse(true, 'Usuario eliminado correctamente.', null, null, 200);
         } catch (ValidationException $e) {
-            return $this->apiResponse(false, 'Correo electrónico inválido o no registrado.', null, $e->errors(), 422);
+            return $this->apiResponse(false, 'Datos inválidos para eliminar el usuario.', null, $e->errors(), 422);
         } catch (Exception $e) {
-            return $this->apiResponse(false, 'Ocurrió un error inesperado al enviar el enlace de restablecimiento.', null, $e->getMessage(), 500);
+            return $this->apiResponse(false, 'Ocurrió un error inesperado al eliminar el usuario.', null, $e->getMessage(), 500);
         }
     }
 
-    public function resetPassword(Request $request)
+    public function getAll(Request $request)
     {
         try {
-            $request->validate([
-                'email' => 'required|email',
-                'password' => 'required|min:8|confirmed',
-                'token' => 'required',
-            ]);
-            $status = Password::reset(
-                $request->only('email', 'password', 'password_confirmation', 'token'),
-                function ($user, $password) {
-                    $user->password = Hash::make($password);
-                    $user->save();
-                }
-            );
-            if ($status === Password::PASSWORD_RESET) {
-                return $this->apiResponse(true, 'Contraseña restablecida correctamente.', null, null, 200);
+
+            $perPage = $request->input('per_page', 10);
+            if (!is_numeric($perPage) || $perPage < 1) {
+                $perPage = 10;
             }
-            throw ValidationException::withMessages([
-                'email' => [__($status)],
-            ]);
-        } catch (ValidationException $e) {
-            return $this->apiResponse(false, 'Datos inválidos para restablecer la contraseña.', null, $e->errors(), 422);
+            $perPage = min($perPage, 100);
+            $query = $request->input('query', '');
+            $key = $request->input('key', null);
+            $order = $request->input('order', null);
+            $usersQuery = User::query();
+            if (!empty($query)) {
+                $usersQuery->where(function ($q) use ($query) {
+                    $q->where('username', 'like', '%' . $query . '%')
+                        ->orWhere('name', 'like', '%' . $query . '%')
+                        ->orWhere('email', 'like', '%' . $query . '%');
+                });
+            }
+            if ($request->has('estado') && $request->input('estado') !== '' && in_array($request->input('estado'), [0, 1])) {
+                $usersQuery->where('estado', $request->input('estado'));
+            }
+            if (!empty($key) && in_array(strtolower($order), ['asc', 'desc'])) {
+                $usersQuery->orderBy($key, $order);
+            }
+            $users = $usersQuery->paginate($perPage);
+            return $this->apiResponse(true, 'Usuarios obtenidos correctamente.', ['users' => $users], null, 200);
         } catch (Exception $e) {
-            return $this->apiResponse(false, 'Ocurrió un error inesperado al restablecer la contraseña.', null, $e->getMessage(), 500);
+            return $this->apiResponse(false, 'Ocurrió un error inesperado al obtener los usuarios.', null, $e->getMessage(), 500);
         }
     }
 }

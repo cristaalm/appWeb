@@ -7,6 +7,7 @@ use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\DispositivoController;
+use App\Http\Controllers\Auth\AuthController;
 // Rutas protegidas por autenticación
 
 // protegemos estas rutas con sanctum
@@ -23,6 +24,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('all', [DispositivoController::class, 'getAll']); // path: /api/dispositivo/all
         Route::post('update', [DispositivoController::class, 'update']); // path: /api/dispositivo/update
     });
+
+    Route::prefix('user')->group(function () {
+        Route::get('all', [UserController::class, 'getAll']); // path: /api/user/all
+        Route::post('update', [UserController::class, 'update']); // path: /api/user/update
+        Route::post('delete', [UserController::class, 'delete']); // path: /api/user/delete
+        Route::post('register', [UserController::class, 'register']); // path: /api/user/register
+    });
 });
 
 Route::prefix('historial')->group(function () {
@@ -33,10 +41,10 @@ Route::prefix('historial')->group(function () {
 
 
 Route::prefix('auth')->group(function () {
-    Route::post('login', [UserController::class, 'login']); // path: /api/auth/login
-    Route::post('token', [UserController::class, 'validateToken']); // path: /api/auth/token
-    Route::post('logout', [UserController::class, 'logout']); // path: /api/auth/logout
-    Route::post('forgot-password', [UserController::class, 'forgotPassword']); // path: /api/auth/forgot-password
-    Route::post('reset-password', [UserController::class, 'resetPassword']); // path: /api/auth/reset-password
-    Route::post('passHash', [UserController::class, 'passHash']); // path: /api/auth/passHash
+    Route::post('login', [AuthController::class, 'login']); // path: /api/auth/login
+    Route::post('token', [AuthController::class, 'validateToken']); // path: /api/auth/token
+    Route::post('logout', [AuthController::class, 'logout']); // path: /api/auth/logout
+    Route::post('forgot-password', [AuthController::class, 'forgotPassword']); // path: /api/auth/forgot-password
+    Route::post('reset-password', [AuthController::class, 'resetPassword']); // path: /api/auth/reset-password
+    Route::post('passHash', [AuthController::class, 'passHash']); // path: /api/auth/passHash
 });
