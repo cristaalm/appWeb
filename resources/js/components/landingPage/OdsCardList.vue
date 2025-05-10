@@ -3,7 +3,7 @@
     <div
       v-for="(ods, index) in odsList"
       :key="ods.title"
-      class="overflow-hidden rounded-sm shadow-sm transition-shadow transform hover:shadow-md hover:-translate-y-1 animate-fadeInUp"
+      class="overflow-hidden rounded-sm shadow-sm transition-all transform hover:shadow-md hover:!scale-105 animate-fadeInUp"
       :style="{ animationDelay: `${0.1 + index * 0.1}s`, backgroundColor: ods.bgColor }"
     >
       <div :class="['h-2', ods.accentBar]"></div>
