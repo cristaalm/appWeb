@@ -40,14 +40,14 @@ class UserController extends Controller
             ]);
             $user = User::where('username', $request->user)->first();
             if (!$user) {
-                return $this->apiResponse(false, 'Correo electrónico o contraseña incorrectos.', null, null, 401);
+                return $this->apiResponse(false, 'Usuario o contraseña incorrectos.', null, null, 401);
             }
             // Si tienes algún campo de estado (activo/inactivo) puedes validarlo aquí:
             if (isset($user->estado) && $user->estado != 1) {
                 return $this->apiResponse(false, 'El usuario no está activo.', null, null, 403);
             }
             if (!Hash::check($request->pass, $user->password)) {
-                return $this->apiResponse(false, 'Correo electrónico o contraseña incorrectos.', null, null, 401);
+                return $this->apiResponse(false, 'Usuario o contraseña incorrectos.', null, null, 401);
             }
             $expiresAt = $request->remember
                 ? Carbon::now()->addYear()
