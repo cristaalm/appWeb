@@ -32,7 +32,7 @@ const { as = 'div', placement = 'bottom-end' } = defineProps<PanelProps>()
 const attrs = useAttrs()
 const computedClass = computed(() =>
   twMerge([
-    'p-2 shadow-[0px_3px_20px_#0000000b] bg-white border-transparent rounded-md dark:bg-darkmode-600 dark:border-transparent',
+    'p-2 shadow-[0px_3px_20px_#0000000b] bg-white border-transparent rounded-md dark:bg-[#013134] dark:border-transparent',
     typeof attrs.class === 'string' && attrs.class
   ])
 )
