@@ -135,5 +135,13 @@ class EmpresaController extends Controller
             return $this->apiResponse(false, 'Error inesperado al eliminar la empresa', $e->getMessage());
         }
     }
-    
+
+    public function getCatalog(Request $request) { // retorna todas las empresas con solo id y nombre comercial
+        try {
+            $empresas = Empresa::select('id_empresa', 'nombre_comercial')->get();
+            return $this->apiResponse(true, 'Empresas obtenidas exitosamente', $empresas);
+        } catch (\Exception $e) {
+            return $this->apiResponse(false, 'Error al obtener las empresas', $e->getMessage());
+        }
+    }
 }

@@ -51,10 +51,10 @@ class UserController extends Controller
         try {
             $request->validate([
                 'id' => 'required|integer',
-                'username' => 'required|string|max:255|unique:users',
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:users',
-                'nivel' => 'required|integer|in:1,2,3',
+                'username' => 'nullable|string|max:255',
+                'name' => 'nullable|string|max:255',
+                'email' => 'nullable|email',
+                'nivel' => 'nullable|integer|in:1,2,3',
                 'id_empresa' => 'required|integer',
             ]);
 
@@ -67,6 +67,13 @@ class UserController extends Controller
                 return $this->apiResponse(false, 'No tienes permiso para registrar un usuario con nivel 1.', null, null, 400);
             }
 
+            // validamos que no haya otro usuario con el mismo username o email
+            if ($request->username && User::where('username', $request->username)->where('id', '!=', $request->id)->exists()) {
+                return $this->apiResponse(false, 'El nombre de usuario ya existe.', null, null, 400);
+            }
+            if ($request->email && User::where('email', $request->email)->where('id', '!=', $request->id)->exists()) {
+                return $this->apiResponse(false, 'El correo electrónico ya existe.', null, null, 400);
+            }
             $user->username = $request->username;
             $user->name = $request->name;
             $user->email = $request->email;
@@ -127,6 +134,8 @@ class UserController extends Controller
             if (!empty($key) && in_array(strtolower($order), ['asc', 'desc'])) {
                 $usersQuery->orderBy($key, $order);
             }
+            $usersQuery->select('users.*', 'empresa.nombre_comercial as empresa')
+            ->join('empresa', 'users.id_empresa', '=', 'empresa.id_empresa');
             $users = $usersQuery->paginate($perPage);
             return $this->apiResponse(true, 'Usuarios obtenidos correctamente.', ['users' => $users], null, 200);
         } catch (Exception $e) {

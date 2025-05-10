@@ -18,6 +18,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('create', [EmpresaController::class, 'create']); // path: /api/empresa/create
         Route::post('update', [EmpresaController::class, 'update']); // path: /api/empresa/update
         Route::post('delete', [EmpresaController::class, 'delete']); // path: /api/empresa/delete
+        Route::get('catalog', [EmpresaController::class, 'getCatalog']); // path: /api/empresa/catalog
     });
 
     Route::prefix('dispositivo')->group(function () {
@@ -28,7 +29,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('user')->group(function () {
         Route::get('all', [UserController::class, 'getAll']); // path: /api/user/all
         Route::post('update', [UserController::class, 'update']); // path: /api/user/update
-        Route::post('delete', [UserController::class, 'delete']); // path: /api/user/delete
+        Route::delete('delete', [UserController::class, 'delete']); // path: /api/user/delete
         Route::post('register', [UserController::class, 'register']); // path: /api/user/register
     });
 });
