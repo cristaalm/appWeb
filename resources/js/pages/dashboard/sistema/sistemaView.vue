@@ -109,8 +109,19 @@ onMounted(() => {
       </div>
       <div class="flex gap-2">
         <!-- boton para recargar -->
-        <VBtn class="ml-auto border-none hover:!bg-transparent" @click="() => loadAllSistemas(true)" :loading="loading" variant="outlined" >
-          <VIcon class="mr-2 dark:text-white text-theme-1" size="24" icon="bx-refresh" />
+         
+        <VBtn
+          variant="text"
+          class="!text-gray-500 hover:!text-blue-600 dark:!text-gray-300 dark:hover:!text-white transition-all duration-200"
+          icon
+          :loading="loading" 
+          title="Refrescar"
+          @click="() => loadAllSistemas(true)"
+        >
+          <VIcon
+            icon="bx-refresh"
+            class="text-xl"
+          />
         </VBtn>
         <VBtn class="ml-auto" @click="openCreateModal">
           <VIcon class="mr-2" icon="bx-plus" />

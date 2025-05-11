@@ -102,7 +102,7 @@ const isPasswordVisible = ref(false)
                     />
 
                     <a
-                      class="text-[#20797a]"
+                      class="text-[#20797a] transform hover:scale-110 transition-all duration-200"
                       href="./forgot-password"
                       @click.prevent="router.push('/forgot-password')"
                     >
@@ -136,6 +136,7 @@ const isPasswordVisible = ref(false)
                     class="mt-4"
                     @click="router.push('/')"
                   >
+                    <VIcon icon="bx-left-arrow-alt" />
                     Regresar
                   </VBtn>
                 </VCol>

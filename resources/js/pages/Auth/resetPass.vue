@@ -110,6 +110,7 @@ const isConfirmPasswordVisible = ref(false)
                 </VBtn>
                 <VBtn block type="button" variant="text" :disabled="loading" class="mt-4"
                   @click="router.push('/login')">
+                  <VIcon icon="bx-left-arrow-alt" />
                   Regresar
                 </VBtn>
               </VCol>

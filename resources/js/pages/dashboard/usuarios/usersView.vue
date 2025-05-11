@@ -90,7 +90,7 @@ onMounted(() => {
     <div class="flex flex-col gap-4 justify-between items-start sm:flex-row sm:items-center">
       <div>
         <h1 class="text-3xl font-semibold text-gray-800 dark:text-slate-200">
-           <span class="text-blue-600 dark:text-slate-200">Usuarios</span> 
+           <span class="dark:text-slate-200">Usuarios</span> 
         </h1>
         <p class="mt-1 text-sm text-gray-500 dark:text-slate-300">
           Administra los usuarios del sistema.

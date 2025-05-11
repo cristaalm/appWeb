@@ -27,7 +27,7 @@ const user = JSON.parse(localStorage.getItem('user')) || {}
 
         <!-- 👉 Search -->
         <div
-          class="cursor-pointer d-flex align-center ms-lg-n3"
+          class="cursor-text d-flex align-center ms-lg-n3"
           style="user-select: none;"
         >
           <!-- mensaje de bienvenida -->

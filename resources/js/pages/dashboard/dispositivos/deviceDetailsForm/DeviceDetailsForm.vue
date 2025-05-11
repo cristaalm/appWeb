@@ -193,8 +193,8 @@ function guardarCambios() {
             />
 
             <span class="flex flex-col items-end text-sm text-right text-gray-900 w-18 max-w-18 dark:text-white" v-if="campo.slider === 'range'">
-              <span>min: {{ localValues[campo.name] ? localValues[campo.name][0] : 0 }}</span>
-              <span>max: {{ localValues[campo.name] ? localValues[campo.name][1] : 0 }}</span>
+              <span>mín: {{ localValues[campo.name] ? localValues[campo.name][0] : 0 }}</span>
+              <span>máx: {{ localValues[campo.name] ? localValues[campo.name][1] : 0 }}</span>
             </span>
 
             <span class="flex flex-col items-end text-sm text-right text-gray-900 w-18 max-w-18 dark:text-white" v-else>
