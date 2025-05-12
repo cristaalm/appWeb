@@ -30,7 +30,7 @@ const form = reactive({
   "email": '',
   "password": '',
   "confirmPassword": '',
-  "nivel": 1,
+  "nivel": 2,
   "estado": true,
 })
 
@@ -43,7 +43,7 @@ watch(() => props.modelValue, val => {
       "name": '',
       "email": '',
       "password": '',
-      "nivel": 1,
+      "nivel": 2,
       "estado": true,
     })
   }

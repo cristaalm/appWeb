@@ -36,7 +36,7 @@ const form = reactive({
   username: '',
   name: '',
   email: '',
-  nivel: 1,
+  nivel: 2,
   estado: true,
 })
 
@@ -49,16 +49,16 @@ watch(() => props.modelValue, val => {
       username: props.user.username || '',
       name: props.user.name || '',
       email: props.user.email || '',
-      nivel: props.user.nivel || 1,
-      estado: props.user.estado !== undefined ? props.user.estado : true,
+      nivel: props.user.nivel || 2,
+      estado: props.user.estado !== undefined ? props.user.estado == 1 ? true : false : true,
     })
     originalUser = {
       id_empresa: props.user.id_empresa || '',
       username: props.user.username || '',
       name: props.user.name || '',
       email: props.user.email || '',
-      nivel: props.user.nivel || 1,
-      estado: props.user.estado !== undefined ? props.user.estado : true,
+      nivel: props.user.nivel || 2,
+      estado: props.user.estado !== undefined ? props.user.estado == 1 ? true : false : true,
     }
   }
 })
@@ -109,7 +109,7 @@ function isFormChanged() {
     form.name !== originalUser.name ||
     form.email !== originalUser.email ||
     form.nivel !== originalUser.nivel ||
-    form.estado !== originalUser.estado
+    form.estado !== originalUser.estado == 1 ? true : false
   )
 }
 
@@ -125,7 +125,7 @@ const saveUpdateUser = async () => {
     name: form.name,
     email: form.email,
     nivel: form.nivel,
-    estado: form.estado,
+    estado: form.estado ,
   }
   if (await updateUser(user)) {
     isOpen.value = false

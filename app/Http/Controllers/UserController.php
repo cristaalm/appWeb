@@ -79,6 +79,7 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->nivel = $request->nivel;
             $user->id_empresa = $request->id_empresa;
+            $user->estado = $request->estado == 1 ? true : false;
             $user->save();
             return $this->apiResponse(true, 'Usuario actualizado correctamente.', ['user' => $user], null, 200);
         } catch (ValidationException $e) {
