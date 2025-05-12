@@ -1,9 +1,7 @@
 <script setup>
 import OdsCardList from '@/components/landingPage/OdsCardList.vue'
 import logotipo from '@/images/logotipo.png?url'
-import collage1 from '@/images/collage1.jpg?url'
-import collage2 from '@/images/collage2.jpg?url'
-import collage3 from '@/images/collage3.jpg?url'
+import collage1 from '@/images/collage1.png?url'
 import { useRouter } from 'vue-router'
 import { onMounted } from 'vue';
 
@@ -40,26 +38,29 @@ onMounted(() => {
     <!-- Sección superior -->
     <div class="bg-[#e0f7f2]">
       <!-- Header -->
-      <header class="flex flex-col justify-between items-center px-4 py-3 border-b border-red-500 md:flex-row md:px-6">
-        <div class="flex gap-2 items-center mb-4 md:mb-0">
-          <img :src="logotipo" alt="AQUANOVA Logo" class="w-auto h-8" />
+      <header class="flex flex-col items-center px-4 py-4 border-b border-red-500 md:flex-row md:justify-between md:items-center md:px-6 md:h-20">
+        <div class="flex gap-2 items-center">
+          <img :src="logotipo" alt="AQUANOVA Logo" class="w-16 h-16 md:w-20 md:h-20" />
           <span class="text-[#008080] font-extrabold text-xl">AQUANOVA</span>
         </div>
-        <nav class="flex flex-wrap justify-center mb-4 space-x-4 md:mb-0">
+        
+        <nav class="flex flex-wrap justify-center space-x-4 py-2 md:py-0">
           <a href="#" class="text-[#008080] hover:text-[#005050] transition-colors duration-300 text-sm font-medium relative nav-link">Inicio</a>
           <a href="#" class="text-[#008080] hover:text-[#005050] transition-colors duration-300 text-sm font-medium relative nav-link">Hidroponía</a>
           <a href="#" class="text-[#008080] hover:text-[#005050] transition-colors duration-300 text-sm font-medium relative nav-link">Proyecto</a>
           <a href="#" class="text-[#008080] hover:text-[#005050] transition-colors duration-300 text-sm font-medium relative nav-link">ODS</a>
           <a href="#" class="text-[#008080] hover:text-[#005050] transition-colors duration-300 text-sm font-medium relative nav-link">Equipo</a>
         </nav>
-        <button @click="router.push('/login')" class="bg-[#008080] text-white px-4 py-1 rounded text-sm hover:bg-[#006666] transition-colors duration-300 transform hover:scale-105">
+        
+        <button @click="router.push('/login')" class="bg-[#008080] text-white px-4 py-2 rounded text-sm hover:bg-[#006666] transition-colors duration-300 transform hover:scale-105 mt-2 md:mt-0">
           Iniciar sesión
         </button>
       </header>
 
+
       <!-- Hero Section -->
       <section class="container px-4 py-6 mx-auto md:px-6 md:py-10 animate-fadeIn">
-        <div class="grid grid-cols-1 gap-8 md:grid-cols-2">
+        <div class="grid grid-cols-1 gap-4 md:grid-cols-2">
           <div class="flex flex-col justify-center space-y-4 h-full">
             <h2 class="text-2xl md:text-3xl font-bold text-[#008080] animate-slideInLeft">
               Innovación Hidropónica<br />para un Futuro Sostenible
@@ -71,21 +72,17 @@ onMounted(() => {
               <button class="bg-[#008080] text-white px-4 py-1 rounded text-sm border border-[#008080] hover:bg-[#006666] transition-all duration-300 transform hover:scale-105">
                 Explorar proyecto
               </button>
-              <button class="bg-white text-[#008080] px-4 py-1 rounded text-sm border border-[#008080] hover:bg-[#e0f7f2] transition-all duration-300 transform hover:scale-105">
+              <button class="bg-white text-[#008080] px-4 py-1 rounded text-sm border border-[#008080] hover:bg-teal-200 transition-all duration-300 transform hover:scale-105">
                 Sobre nosotros
               </button>
             </div>
           </div>
-          <div class="relative mt-4 h-64 md:h-80 md:mt-0 animate-fadeIn" style="animation-delay: 0.5s">
-            <div class="absolute top-6 left-0 w-3/5 h-2/3 z-10 transform hover:scale-105 transition-transform duration-300 rotate-[-5deg] shadow-md">
-              <img :src="collage1" alt="Imag1" class="object-cover w-full h-full border-2 border-white" />
-            </div>
-            <div class="absolute top-0 right-4 w-2/4 h-1/2 z-20 transform hover:scale-105 transition-transform duration-300 rotate-[3deg] shadow-md">
-              <img :src="collage2" alt="Imag2" class="object-cover w-full h-full border-2 border-white" />
-            </div>
-            <div class="absolute bottom-4 left-8 w-2/3 h-1/2 z-30 transform hover:scale-105 transition-transform duration-300 rotate-[5deg] shadow-md">
-              <img :src="collage3" alt="Imag3" class="object-cover w-full h-full border-2 border-white" />
-            </div>
+          <div class="flex items-center justify-center mt-4 md:mt-0 animate-fadeIn" style="animation-delay: 0.5s">
+            <img
+              :src="collage1"
+              alt="Imagen del collage"
+              class="w-[400px] h-[100]max-w-md md:max-w-xl h-auto object-contain rounded shadow-lg"
+            />
           </div>
         </div>
       </section>
