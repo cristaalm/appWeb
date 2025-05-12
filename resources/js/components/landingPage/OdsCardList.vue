@@ -1,5 +1,5 @@
 <template>
-  <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+  <div class="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-4">
     <div
       v-for="(ods, index) in odsList"
       :key="ods.title"
@@ -8,13 +8,13 @@
     >
       <div :class="['h-2', ods.accentBar]"></div>
       <div class="p-4">
-        <div class="flex justify-center mb-3">
+        <div class="flex items-start mb-3">
           <div :class="['p-2 rounded-full', ods.iconBg]">
             <img :src="ods.icon" :alt="ods.title" class="w-6 h-6" />
           </div>
         </div>
-        <h3 class="mb-1 text-sm font-semibold text-center">{{ ods.title }}</h3>
-        <p class="text-xs font-light text-gray-600">{{ ods.description }}</p>
+        <h3 class="mb-1 text-sm font-semibold text-left">{{ ods.title }}</h3>
+        <p class="text-xs font-light text-gray-600 text-left">{{ ods.description }}</p>
       </div>
     </div>
   </div>
