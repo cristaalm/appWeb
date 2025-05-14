@@ -66,37 +66,43 @@ const dataTaps = {
   5: {
     value: 5,
     avatar: DistImage,
-    title: 'Sensor de distancia',
+    title: 'Nivel del agua',
+    name: 'Sensor ultrasonico',
     color: '#12b7ef',
   },
   2: {
     value: 2,
     avatar: PHImage,
-    title: 'Sensor de PH',
+    title: 'PH del agua',
+    name: 'Sensor de PH sumergible',
     color: '#62b1ad',
   },
   1: {
     value: 1,
     avatar: CEImage,
-    title: 'Sensor de conductividad',
+    title: 'Conductividad del agua',
+    name: 'Sensor de conductividad',
     color: '#2ecc71',
   },
   3: {
     value: 3,
     avatar: DHT11,
-    title: 'Sensor de temperatura y humedad',
+    title: 'Temperatura del ambiente',
+    name: 'Sensor DHT11 de temperatura y humedad',
     color: '#ec9c56',
   },
   6: {
     value: 6,
     avatar: DHT11,
-    title: 'Sensor de humedad',
+    title: 'Humedad del ambiente',
+    name: 'Sensor DHT11 de temperatura y humedad',
     color: '#1e89cf',
   },
   4: {
     value: 4,
     avatar: TempImage,
-    title: 'Sensor de temperatura',
+    title: 'Temperatura del agua',
+    name: 'Sensor de temperatura sumergible',
     color: '#3c9a9b',
   },
 }
@@ -228,7 +234,7 @@ const chartConfig = computed(() => {
 
       <div>
         <p class="mb-0">
-          {{ tabData.title }}
+          {{ tabData.name }}
         </p>
         <div class="gap-2 d-flex align-center">
           <h6 class="text-h6">

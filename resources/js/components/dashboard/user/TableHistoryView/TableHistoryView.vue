@@ -2,7 +2,7 @@
 import OrderTable from '@/components/orderTable/'
 import { useAllHistory } from '@/hooks/History/useGetAllHistory'
 import Litepicker from '@/components/Base/Litepicker'
-import { inject } from 'vue'
+import { inject, computed } from 'vue'
 
 const {
   selectedTypeDevice,
@@ -20,37 +20,44 @@ const {
 } = useAllHistory(selectedTypeDevice)
 
 
+const headers = computed(() => {
+  return [
+    { title: dataTaps[selectedTypeDevice.value].titleTable, key: 'valor', sortable: false },
+    { title: 'Fecha', key: 'fecha_ingreso', sortable: true },
+  ]
+})
 
-const headers = [
-  { title: 'Dispositivo', key: 'id_dispositivo', sortable: false },
-  { title: 'Valor', key: 'valor', sortable: false },
-  { title: 'Fecha', key: 'fecha_ingreso', sortable: true },
-]
 
 const dataTaps = {
   5: {
     value: 5,
     title: 'Sensor de distancia',
+    titleTable: 'Nivel del agua (cm)',
   },
   2: {
     value: 2,
     title: 'Sensor de PH',
+    titleTable: 'PH del agua',
   },
   1: {
     value: 1,
     title: 'Sensor de conductividad',
+    titleTable: 'Conductividad del agua (mS/cm)',
   },
   3: {
     value: 3,
-    title: 'Sensor de temperatura y humedad',
+    title: 'Sensor de temperatura del ambiente',
+    titleTable: 'Temperatura del ambiente (°C)',
   },
   6: {
     value: 6,
-    title: 'Sensor de humedad',
+    title: 'Sensor de humedad del ambiente',
+    titleTable: 'Humedad del ambiente (%)',
   },
   4: {
     value: 4,
-    title: 'Sensor de temperatura',
+    title: 'Sensor de temperatura del agua',
+    titleTable: 'Temperatura del agua (°C)',
   },
 }
 

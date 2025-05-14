@@ -41,18 +41,6 @@ const user = JSON.parse(localStorage.getItem('user')) || {}
           <VIcon icon="bx-dots-vertical-rounded" />
           <VMenu activator="parent" width="230" location="bottom end" offset="14px">
             <VList>
-              <!-- 👉 Configuración -->
-              <VListItem link>
-                <template #prepend>
-                  <VIcon
-                    class="me-2"
-                    icon="bx-cog"
-                    size="22"
-                  />
-                </template>
-                <VListItemTitle>Configuración</VListItemTitle>
-              </VListItem>
-
               <!-- 👉 Modo oscuro / claro -->
               <VListItem link @click="changeTheme">
                 <template #prepend>
