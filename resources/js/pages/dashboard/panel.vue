@@ -1,7 +1,12 @@
 <script setup>
-import DevelopModule from '@/components/developModule/'
+import adminView from '@/pages/dashboard/panel/admin/adminView.vue'
+import userView from '@/pages/dashboard/panel/user/userView.vue'
+
+const user = JSON.parse(localStorage.getItem('user'))
+const component = user.nivel == 1 ? adminView : userView
+
 </script>
 
 <template>
-  <DevelopModule title="Panel" />
+  <component :is="component" />
 </template>

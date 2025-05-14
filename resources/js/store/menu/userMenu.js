@@ -8,7 +8,7 @@ const useMenuStore = defineStore('menu', {
     async loadMenu(user) {
       if (!user || !user.nivel ) return []
         
-      this.value = user.nivel == 1 ? this.adminVelorMenu() : this.userMenu()
+      this.value = user.nivel == 1 ? this.adminAquanovaMenu() : this.userMenu()
     },
     userMenu() {
       return [
@@ -17,97 +17,9 @@ const useMenuStore = defineStore('menu', {
           icon: 'bx-bxs-dashboard',
           to: '/panel',
         },
-        'Mi Perfil',
-        {
-          title: 'Mi información',
-          icon: 'bx-user',
-          to: '/perfil/informacion',
-        },
-        {
-          title: 'Gestion de tiempo',
-          icon: 'bx-time-five',
-          to: '/perfil/tiempo',
-        },
-        {
-          title: 'Tareas',
-          icon: 'bx-task',
-          to: '/perfil/tareas',
-        },
-        'Empresa',
-        {
-          title: 'Organigrama',
-          icon: 'bx-building-house',
-          to: '/empresa/organigrama',
-        },
-        {
-          title: 'Directorio',
-          icon: 'bx-user-pin',
-          to: '/empresa/directorio',
-        },
-        {
-          title: 'Comunicación',
-          icon: 'bx-chat',
-          to: '/empresa/comunicacion',
-        },
-        {
-          title: 'Reclutamiento',
-          icon: 'bx-user-plus',
-          menu: [
-            {
-              title: 'Reclutamiento y seleccion',
-              to: '/empresa/reclutamiento',
-            },
-            {
-              title: 'Onboarding',
-              to: '/empresa/onboarding',
-            },
-          ],
-        },
-        {
-          title: 'Capacitaciones',
-          icon: 'bx-book-reader',
-          to: '/empresa/capacitacion',
-        },
-        {
-          title: 'Clima Laboral',
-          icon: 'bx-smile',
-          to: '/empresa/clima',
-        },
-        {
-          title: 'Evaluación de desempeño',
-          icon: 'bx-star',
-          to: '/empresa/evaluacion',
-        },
-        'Configuraciones',
-        {
-          title: 'Configuración de uniama',
-          icon: 'bx-cog',
-          menu: [
-            {
-              title: 'Sistema',
-              to: '/configuracion/sistema',
-            },
-            {
-              title: 'Catalogos',
-              to: '/configuracion/catalogos',
-            },
-            {
-              title: 'Clientes',
-              to: '/configuracion/clientes',
-            },
-            {
-              title: 'Corporativos',
-              to: '/configuracion/corporativos',
-            },
-            {
-              title: 'Actualizaciones',
-              to: '/configuracion/actualizaciones',
-            },
-          ],
-        },
       ]
     },
-    adminVelorMenu() {
+    adminAquanovaMenu() {
       return [
         {
           title: 'Panel',

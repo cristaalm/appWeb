@@ -10,6 +10,10 @@ const props = defineProps({
   total: Number,
   sortBy: Array,
   search: String,
+  activeSearch: {
+    type: Boolean,
+    default: true
+  }
 })
 
 const emit = defineEmits([
@@ -49,6 +53,7 @@ const goToLastPage = () => {
 <template>
   <div>
     <VTextField
+      v-if="activeSearch"
       :model-value="search"
       label="Buscar..."
       class="mb-2"
@@ -62,6 +67,7 @@ const goToLastPage = () => {
       :search="search"
       :items-per-page="perPage"
       :loading="loading"
+      :sort-by="sortBy"
       class="elevation-1"
       show-current-page
       hide-default-footer
@@ -79,13 +85,13 @@ const goToLastPage = () => {
       </template>
 
       <template #bottom>
-        <div class="flex flex-wrap items-center justify-between gap-2 p-2 mt-4">
+        <div class="flex flex-wrap gap-2 justify-between items-center p-2 mt-4">
           <!-- Select de elementos por página -->
-          <div class="flex items-center gap-2">
+          <div class="flex gap-2 items-center">
             <span class="text-sm">Mostrar</span>
             <VSelect
               :model-value="perPage"
-              :items="[5, 10, 25, 50]"
+              :items="[5, 10, 25, 50, 100]"
               class="w-20"
               hide-details
               dense
@@ -101,7 +107,7 @@ const goToLastPage = () => {
           </div>
 
           <!-- Controles de paginado -->
-          <div class="flex items-center gap-1">
+          <div class="flex gap-1 items-center">
             <VBtn
               icon
               :disabled="page <= 1"
