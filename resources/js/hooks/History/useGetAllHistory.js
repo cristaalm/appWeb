@@ -20,8 +20,9 @@ export function useAllHistory(selectedTypeDevice) {
     loading.value = true
     try {
         const [fechaInicio, fechaFin] = fecha.value.split(' - ').map(dateString => {
-            const date = new Date(dateString)
-            return isNaN(date.getTime()) ? null : date.toISOString().split('T')[0]
+            const [day, month, year] = dateString.split('/')
+            const date = new Date(`${year}-${month}-${day}`)
+            return isNaN(date.getTime()) ? null : `${year}-${month}-${day}`
         })
 
         const filters = {
