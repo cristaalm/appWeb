@@ -164,17 +164,17 @@ module.exports = {
 
         // Default dark-mode colors
         '.dark': {
-          '--color-primary': toRGB('#23263a'), // Fondo principal
-          '--color-darkmode-50': '224 230 237', // Texto principal (gris muy claro)
-          '--color-darkmode-100': '180 190 210', // Texto secundario
-          '--color-darkmode-200': '120 130 160', // Bordes/acento
-          '--color-darkmode-300': '60 68 100', // Tarjetas
-          '--color-darkmode-400': '41 45 66', // Navbar, sidebar
-          '--color-darkmode-500': '36 39 63', // Fondo de tarjetas
-          '--color-darkmode-600': '33 36 58', // Fondo navbar/sidebar
-          '--color-darkmode-700': '29 32 52', // Fondo modal
-          '--color-darkmode-800': '22 24 38', // Fondo profundo
-          '--color-darkmode-900': '15 17 28', // Fondo más oscuro
+          '--color-primary': toRGB('rgb(1, 49, 52)'), // Fondo principal
+          '--color-darkmode-50': '22 124 129', // Texto principal (gris muy claro
+          '--color-darkmode-100': '17 94 100', // Texto secundario
+          '--color-darkmode-200': '13 73 78', // Bordes/acento
+          '--color-darkmode-300': '10 56 61', // Tarjetas
+          '--color-darkmode-400': '8 43 47', // Navbar sidebar
+          '--color-darkmode-500': '7 39 43', // Fondo de tarjetas
+          '--color-darkmode-600': '6 35 39', // Fondo navbar/sidebar
+          '--color-darkmode-700': '5 31 35', // Fondo modal
+          '--color-darkmode-800': '4 27 31', // Fondo profundo
+          '--color-darkmode-900': '3 24 28', // Fondo más oscuro
         },
       })
     }),

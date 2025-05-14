@@ -20,18 +20,20 @@ const props = withDefaults(
       | 'three-dots'
     color?: string
     customClass?: string // Nueva propiedad para clases personalizadas
+    fillColor?: string | null
   }>(),
   {
     color: '#2d3748',
-    customClass: '' // Valor por defecto para las clases
+    customClass: '', // Valor por defecto para las clases
+    fillColor: null // Valor por defecto para el color de relleno
   }
 )
 
+const { icon, customClass: customClass, fillColor } = props
 const darkMode = computed(() => global.name.value === 'dark')
 const iconColor = computed(() => {
-  return !darkMode.value ? props.color : '#ffffff'
+  return fillColor != null ? fillColor : !darkMode.value ? props.color : '#ffffff'
 })
-const { icon, customClass: customClass } = props
 </script>
 
 <template>

@@ -191,6 +191,7 @@
 .dark {
     .litepicker {
         background-color: theme("colors.darkmode.600");
+        border-color: theme("colors.darkmode.600");
         &:before,
         &:after {
             border-right-color: transparent;
