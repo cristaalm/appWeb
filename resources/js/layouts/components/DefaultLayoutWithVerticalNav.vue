@@ -27,11 +27,11 @@ const user = JSON.parse(localStorage.getItem('user')) || {}
 
         <!-- 👉 Search -->
         <div
-          class="cursor-text d-flex align-center ms-lg-n3"
+          class="min-w-0 cursor-text d-flex align-center ms-lg-n3"
           style="user-select: none;"
         >
           <!-- mensaje de bienvenida -->
-          <span class="text-[#20797a] dark:text-[#c5efec] mb-[2px] ml-2 text-xl md:text-3xl font-bold">Bienvenido, {{ user.name }}</span>
+          <span class="text-[#20797a] dark:text-[#c5efec] mb-[2px] ml-2 text-xl md:text-3xl text-nowrap truncate font-bold">Bienvenido<span class="inline md:hidden">,</span> <span class="hidden md:inline">al panel de control</span> {{ user.name }}</span>
         </div>
 
         <VSpacer />
