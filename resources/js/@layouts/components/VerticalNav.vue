@@ -36,12 +36,15 @@ const updateIsVerticalNavScrolled = val => isVerticalNavScrolled.value = val
 const handleNavScroll = evt => {
   isVerticalNavScrolled.value = evt.target.scrollTop > 0
 }
+
+const user = JSON.parse(localStorage.getItem('user')) || {}
 </script>
 
 <template>
   <Component
     :is="props.tag"
     ref="refNav"
+    v-if="user.nivel !== 2"
     data-allow-mismatch
     class="layout-vertical-nav"
     :class="[
@@ -185,4 +188,6 @@ const handleNavScroll = evt => {
     transition: transform 0.25s ease-in-out;
   }
 }
+
+
 </style>

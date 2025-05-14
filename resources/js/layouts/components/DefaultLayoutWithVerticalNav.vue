@@ -20,6 +20,7 @@ const user = JSON.parse(localStorage.getItem('user')) || {}
         <!-- 👉 Vertical nav toggle in overlay mode -->
         <IconBtn
           class="ms-n3 d-lg-none"
+          v-if="user.nivel !== 2"
           @click="toggleVerticalOverlayNavActive(true)"
         >
           <VIcon icon="bx-menu" />

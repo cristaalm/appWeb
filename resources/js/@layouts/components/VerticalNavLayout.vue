@@ -2,6 +2,7 @@
 import { useDisplay } from 'vuetify'
 import VerticalNav from '@layouts/components/VerticalNav.vue'
 
+
 export default defineComponent({
   setup(props, { slots }) {
     const isOverlayNavActive = ref(false)
@@ -9,6 +10,7 @@ export default defineComponent({
     const toggleIsOverlayNavActive = useToggle(isOverlayNavActive)
     const route = useRoute()
     const { mdAndDown } = useDisplay()
+    const user = JSON.parse(localStorage.getItem('user')) || {}
 
 
     // ℹ️ This is alternative to below two commented watcher
@@ -52,6 +54,7 @@ export default defineComponent({
           'layout-wrapper layout-nav-type-vertical layout-navbar-static layout-footer-static layout-content-width-fluid',
           mdAndDown.value && 'layout-overlay-nav',
           route.meta.layoutWrapperClasses,
+          user.nivel == 2 && 'no-sidebar',
         ],
       }, [
         verticalNav,
@@ -84,8 +87,17 @@ export default defineComponent({
     transition: padding-inline-start 0.2s ease-in-out;
     will-change: padding-inline-start;
 
-    @media screen and (min-width: 1280px) {
-      padding-inline-start: variables.$layout-vertical-nav-width;
+  }
+  
+  @media screen and (min-width: 1280px) {
+    &:not(.no-sidebar) {
+      .layout-content-wrapper {
+        padding-inline-start: variables.$layout-vertical-nav-width;
+      }
+    }
+
+    & .layout-content-wrapper {
+      padding-inline-start: 0;
     }
   }
 

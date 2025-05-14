@@ -123,7 +123,7 @@ const dataTaps = {
       <template #item.fecha_ingreso="{ item }">
         <!-- formateamos la fecha -->
          <span class="flex flex-row gap-2 items-center text-lg font-medium text-gray-500 dark:text-gray-300">
-          {{ new Date(item.fecha_ingreso).toLocaleDateString() }}
+          {{ new Date(item.fecha_ingreso).toLocaleString('es-MX', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit'}) }}
           <VIcon
             icon="bx-calendar"
             class="text-lg"
