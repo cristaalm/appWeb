@@ -32,6 +32,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('delete', [UserController::class, 'delete']); // path: /api/user/delete
         Route::post('register', [UserController::class, 'register']); // path: /api/user/register
     });
+
+    Route::prefix('logs')->group(function () {
+        Route::get('all', [HistorialController::class, 'getAll']); // path: /api/logs/all
+        Route::post('last-month', [HistorialController::class, 'getLastMonthData']); // path: /api/logs/last-month
+    });
 });
 
 Route::prefix('historial')->group(function () {
@@ -48,4 +53,4 @@ Route::prefix('auth')->group(function () {
     Route::post('forgot-password', [AuthController::class, 'forgotPassword']); // path: /api/auth/forgot-password
     Route::post('reset-password', [AuthController::class, 'resetPassword']); // path: /api/auth/reset-password
     Route::post('passHash', [AuthController::class, 'passHash']); // path: /api/auth/passHash
-});
+}); 

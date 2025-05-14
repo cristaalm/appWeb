@@ -7,9 +7,113 @@ use App\Models\Historial;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Log;
 use Exception;
+use Illuminate\Support\Facades\DB;
 
 class HistorialController extends Controller
 {
+    /**
+     * Obtener historial con paginación, filtrado por fecha y tipo de dispositivo (nombre).
+     */
+    public function getAll(Request $request)
+    {
+        try {
+            $perPage = $request->input('per_page', 10);
+            if (!is_numeric($perPage) || $perPage < 1) {
+                $perPage = 10;
+            }
+            $perPage = min($perPage, 100);
+
+            $fechaInicio = $request->input('fecha_inicio');
+            $fechaFin = $request->input('fecha_fin');
+            $tipoDispositivo = $request->input('tipo_dispositivo'); // id o nombre del dispositivo
+
+            $historialQuery = Historial::query();
+
+            // Join con dispositivos para poder filtrar por nombre
+            $historialQuery->join('dispositivos', 'historiales.id_dispositivo', '=', 'dispositivos.id_dispositivo')
+                ->select('historiales.*', 'dispositivos.nombre as nombre_dispositivo');
+
+            if (!empty($fechaInicio) && $fechaInicio !== 'undefined' && $fechaInicio !== 'null') {
+                $fechaInicio = date('Y-m-d 00:00:00', strtotime(str_replace('/', '-', $fechaInicio)));
+                $historialQuery->where('fecha_ingreso', '>=', $fechaInicio);
+            }
+            if (!empty($fechaFin) && $fechaFin !== 'undefined' && $fechaFin !== 'null') {
+                $fechaFin = date('Y-m-d 23:59:59', strtotime(str_replace('/', '-', $fechaFin)));
+                $historialQuery->where('fecha_ingreso', '<=', $fechaFin);
+            }
+
+            if (!empty($tipoDispositivo)) {
+                if (is_numeric($tipoDispositivo)) {
+                    $historialQuery->where('dispositivos.id_dispositivo', '=', $tipoDispositivo);
+                } else {
+                    $historialQuery->where('dispositivos.nombre', 'like', "%$tipoDispositivo%");
+                }
+            }
+
+            $historialQuery->orderBy('fecha_ingreso', 'desc');
+
+            $historiales = $historialQuery->paginate($perPage);
+
+            return $this->apiResponse(200, 'Historiales obtenidos correctamente.', $historiales, null, 200);
+        } catch (\Exception $e) {
+            return $this->apiResponse(500, 'Ocurrió un error al obtener los historiales.', null, $e->getMessage(), 500);
+        }
+    }
+
+    // funcion que retorna todos los datos del ultimo mes (id del dispositivo, valor y fecha del registro)
+    public function getLastMonthData(Request $request)
+    {
+        try {
+            $idDispositivo = $request->input('id_dispositivo');
+    
+            if (empty($idDispositivo)) {
+                return $this->apiResponse(400, 'No se proporcionó el id del dispositivo.', null, 'No se proporcionó el id del dispositivo.', 400);
+            }
+    
+            // Obtener los promedios diarios
+            $historiales = DB::table('historiales')
+                ->selectRaw('id_dispositivo, DATE(fecha_ingreso) as fecha, AVG(valor) as valor')
+                ->where('id_dispositivo', $idDispositivo)
+                ->where('fecha_ingreso', '>=', now()->subMonth())
+                ->groupByRaw('id_dispositivo, DATE(fecha_ingreso)')
+                ->orderBy('fecha', 'asc')
+                ->get()
+                ->map(function ($item) {
+                    return [
+                        'id_dispositivo' => $item->id_dispositivo,
+                        'valor' => round($item->valor, 2),
+                        'fecha_ingreso' => $item->fecha . ' 00:00:00',
+                    ];
+                });
+    
+            // Si hay al menos 2 días con registros, calculamos profitloss y current
+            $count = $historiales->count();
+            $current = null;
+            $profitloss = null;
+    
+            if ($count >= 2) {
+                $lastDay = $historiales[$count - 1]['valor'];
+                $prevDay = $historiales[$count - 2]['valor'];
+    
+                $current = $lastDay;
+                $profitloss = round($lastDay - $prevDay, 2);
+            } elseif ($count === 1) {
+                $current = $historiales[0]['valor'];
+                $profitloss = null; // no hay día anterior
+            }
+    
+            // Retornar todo en una sola respuesta
+            return $this->apiResponse(200, 'Promedio diario obtenido correctamente.', [
+                'data' => $historiales,
+                'current' => $current,
+                'profitloss' => $profitloss,
+            ], null, 200);
+    
+        } catch (\Exception $e) {
+            return $this->apiResponse(500, 'Ocurrió un error al obtener los datos.', null, $e->getMessage(), 500);
+        }
+    }
+    
 
     public function connect(Request $request){
         return $this->apiResponse(200, 'Conectado', null, 200);
