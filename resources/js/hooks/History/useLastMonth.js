@@ -9,11 +9,12 @@ export default function useLastMonth() {
     const error = ref(null)
     const first = ref(true)
     const showToast = inject("showToast");
+    const user = JSON.parse(localStorage.getItem('user')) || {}
 
     const loadLastMonthData = async (idDispositivo) => {
         loading.value = true
         try {
-            const response = await getLastMonth({ token: localStorage.getItem("access_token"), idDispositivo });
+            const response = await getLastMonth({ token: localStorage.getItem("access_token"), idDispositivo, id_empresa: user.id_empresa });
             data.value = response.data.data;
             profitLoss.value = response.data.profitloss;
             current.value = response.data.current;

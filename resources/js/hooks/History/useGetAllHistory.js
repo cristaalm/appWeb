@@ -13,6 +13,7 @@ export function useAllHistory(selectedTypeDevice) {
 
   const fecha = ref('dd/mm/yyyy - dd/mm/yyyy')
   const tipoDispositivo = ref(selectedTypeDevice)
+  const user = JSON.parse(localStorage.getItem('user')) || {}
 
   const showToast = inject('showToast')
 
@@ -32,7 +33,8 @@ export function useAllHistory(selectedTypeDevice) {
             token: localStorage.getItem('access_token'),
             fechaInicio,
             fechaFin,
-            tipoDispositivo: tipoDispositivo.value
+            tipoDispositivo: tipoDispositivo.value,
+            id_empresa: user.id_empresa
         }
 
         const response = await getAllHistory(filters)

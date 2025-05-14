@@ -26,13 +26,16 @@ class HistorialController extends Controller
             $fechaInicio = $request->input('fecha_inicio');
             $fechaFin = $request->input('fecha_fin');
             $tipoDispositivo = $request->input('tipo_dispositivo'); // id o nombre del dispositivo
+            $idEmpresa = $request->input('id_empresa');
 
             $historialQuery = Historial::query();
 
+            
             // Join con dispositivos para poder filtrar por nombre
             $historialQuery->join('dispositivos', 'historiales.id_dispositivo', '=', 'dispositivos.id_dispositivo')
-                ->select('historiales.*', 'dispositivos.nombre as nombre_dispositivo');
-
+            ->select('historiales.*', 'dispositivos.nombre as nombre_dispositivo');
+            $historialQuery->where('historiales.id_empresa', '=', $idEmpresa);
+            
             if (!empty($fechaInicio) && $fechaInicio !== 'undefined' && $fechaInicio !== 'null') {
                 $fechaInicio = date('Y-m-d 00:00:00', strtotime(str_replace('/', '-', $fechaInicio)));
                 $historialQuery->where('fecha_ingreso', '>=', $fechaInicio);
@@ -65,6 +68,7 @@ class HistorialController extends Controller
     {
         try {
             $idDispositivo = $request->input('id_dispositivo');
+            $idEmpresa = $request->input('id_empresa');
     
             if (empty($idDispositivo)) {
                 return $this->apiResponse(400, 'No se proporcionó el id del dispositivo.', null, 'No se proporcionó el id del dispositivo.', 400);
@@ -74,6 +78,7 @@ class HistorialController extends Controller
             $historiales = DB::table('historiales')
                 ->selectRaw('id_dispositivo, DATE(fecha_ingreso) as fecha, AVG(valor) as valor')
                 ->where('id_dispositivo', $idDispositivo)
+                ->where('id_empresa', $idEmpresa)
                 ->where('fecha_ingreso', '>=', now()->subMonth())
                 ->groupByRaw('id_dispositivo, DATE(fecha_ingreso)')
                 ->orderBy('fecha', 'asc')
