@@ -49,7 +49,6 @@ declare module 'vue' {
     Popover: typeof import('./resources/js/components/Base/Headless/Popover/Popover.vue')['default']
     Provider: typeof import('./resources/js/components/Base/Headless/Disclosure/Disclosure/Provider.vue')['default']
     ProviderLayer: typeof import('./resources/js/components/ProviderLayer.vue')['default']
-    ReportBarChart5: typeof import('./resources/js/components/GraphPanelUser/ReportBarChart5.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Slideover: typeof import('./resources/js/components/Base/Headless/Slideover/Slideover.vue')['default']

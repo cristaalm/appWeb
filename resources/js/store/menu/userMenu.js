@@ -42,6 +42,11 @@ const useMenuStore = defineStore('menu', {
           icon: 'bx bxs-cog', // Representa configuración o sistemas
           to: '/panel/sistemas',
         },
+        {
+          title: 'Dispositivos empresa',
+          icon: 'bx bxs-building-house', // Representa las empresas
+          to: '/panel/dispositivos-empresa',
+        }
       ];
     },
   },

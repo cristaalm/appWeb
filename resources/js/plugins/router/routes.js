@@ -91,6 +91,10 @@ export const routes = [
       {
         path: 'usuarios',
         component: () => import('@/pages/dashboard/usuarios/usersView.vue'),
+      },
+      {
+        path: 'dispositivos-empresa',
+        component: () => import('@/pages/dashboard/dispositivos-empresas/dispEmpresas.vue'),
       }
     ],
   },
