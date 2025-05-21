@@ -78,22 +78,38 @@ export const routes = [
     children: [
       {
         path: '',
-        redirect: '/panel/usuarios',
+        name: 'panel',
+        component: () => import('@/pages/dashboard/panel.vue'),
+        beforeEnter: async (to, from, next) => {
+          const user = JSON.parse(localStorage.getItem('user'))
+
+          if (user.nivel == 1) {
+            console.log('admin')
+            next({ name: 'usuarios' })
+          }
+
+          console.log('user')
+          next()
+        }
       },
       {
         path: 'sistemas',
+        name: 'sistemas',
         component: () => import('@/pages/dashboard/sistema/sistemaView.vue'),
       },
       {
         path: 'dispositivos',
+        name: 'dispositivos',
         component: () => import('@/pages/dashboard/dispositivos/devicesView.vue'),
       },
       {
         path: 'usuarios',
+        name: 'usuarios',
         component: () => import('@/pages/dashboard/usuarios/usersView.vue'),
       },
       {
         path: 'dispositivos-empresa',
+        name: 'dispositivos-empresa',
         component: () => import('@/pages/dashboard/dispositivos-empresas/dispEmpresas.vue'),
       }
     ],

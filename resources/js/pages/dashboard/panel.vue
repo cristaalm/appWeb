@@ -1,9 +1,9 @@
 <script setup>
-import adminView from '@/pages/dashboard/panel/admin/adminView.vue'
+// import adminView from '@/pages/dashboard/panel/admin/adminView.vue'
 import userView from '@/pages/dashboard/panel/user/userView.vue'
 
 const user = JSON.parse(localStorage.getItem('user'))
-const component = user.nivel == 1 ? adminView : userView
+const component = userView
 
 </script>
 
