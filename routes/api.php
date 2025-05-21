@@ -7,6 +7,7 @@ use App\Http\Controllers\HistorialController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\EmpresaController;
 use App\Http\Controllers\DispositivoController;
+use App\Http\Controllers\DispositivoEmpresaController;
 use App\Http\Controllers\Auth\AuthController;
 // Rutas protegidas por autenticación
 
@@ -37,7 +38,13 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('all', [HistorialController::class, 'getAll']); // path: /api/logs/all
         Route::post('last-month', [HistorialController::class, 'getLastMonthData']); // path: /api/logs/last-month
     });
+
+    Route::prefix('dispositivo-empresa')->group(function () {
+        Route::post('all', [DispositivoEmpresaController::class, 'getAll']); // path: /api/dispositivo-empresa/all
+        Route::post('toggle', [DispositivoEmpresaController::class, 'toggleDevice']); // path: /api/dispositivo-empresa/toggle
+    });
 });
+
 
 Route::prefix('historial')->group(function () {
     Route::get('connect', [HistorialController::class, 'connect']); // path: /api/historial/connect
