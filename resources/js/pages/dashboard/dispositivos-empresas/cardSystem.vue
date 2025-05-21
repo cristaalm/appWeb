@@ -1,26 +1,26 @@
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import PHImage from '@images/sensors/PH.png?url'
 import CEImage from '@images/sensors/CE.png?url'
 import DHT11 from '@images/sensors/DHT11.png?url'
 import TempImage from '@images/sensors/Temp.png?url'
 import DistImage from '@images/sensors/Dist.png?url'
+import useAllDevices  from '@/hooks/devicesSistems/useGetDevices'
+import useToggleDevice from '@/hooks/devicesSistems/useToggleDevice'  
 
 const props = defineProps({
   sistema: Object,
   expandedId: Number,
 })
-const emit = defineEmits(['update-expanded'])
 
-const isExpanded = computed(() => props.expandedId === props.sistema.id)
 
-const devices = ref([
-  { id_dispositivo: 1, nombre: 'Sensor de conductividad eléctrica', descripcion: 'Mide la conductividad eléctrica de un fluido', enabled: true },
-  { id_dispositivo: 2, nombre: 'Sensor de pH', descripcion: 'Mide la concentración de átomos hidrogenoiones en un fluido', enabled: false },
-  { id_dispositivo: 3, nombre: 'Sensor de humedad y temperatura', descripcion: 'Mide la humedad relativa y la temperatura en un ambiente', enabled: true },
-  { id_dispositivo: 4, nombre: 'Sensor de temperatura', descripcion: 'Mide la temperatura en un ambiente', enabled: true },
-  { id_dispositivo: 5, nombre: 'Sensor de distancia', descripcion: 'Mide la distancia entre dos objetos', enabled: false },
-])
+const expandedSistemaId = ref(null)
+
+const isExpanded = computed(() => expandedSistemaId.value === props.sistema.id)
+
+const { dispositivos, loadAllDevices, first, loading } = useAllDevices()
+
+const { toggleDevice, currentDevice, loading: loadingToggle } = useToggleDevice()
 
 const sensorForImages = {
   1: CEImage,
@@ -31,13 +31,17 @@ const sensorForImages = {
 }
 
 function toggleDeviceList() {
-  emit('update-expanded', isExpanded.value ? null : props.sistema.id)
+  expandedSistemaId.value = isExpanded.value ? null : props.sistema.id
+  if (isExpanded.value) {
+    console.log(props.sistema.id)
+    loadAllDevices(props.sistema.id_empresa)
+  }
 }
 </script>
 
 <template>
   <VCard
-    class="rounded-2xl border border-gray-200 shadow-md transition-all hover:shadow-lg overflow-hidden"
+    class="overflow-hidden rounded-2xl border border-gray-200 shadow-md transition-all hover:shadow-lg"
     :class="!sistema.estado ? 'opacity-60 grayscale' : ''"
   >
     <VCardText class="flex gap-4 items-center p-6 pb-4">
@@ -59,24 +63,26 @@ function toggleDeviceList() {
         @click="toggleDeviceList"
       >
         <span class="text-sm font-medium text-gray-700 dark:text-white">Dispositivos</span>
-        <VIcon :icon="isExpanded ? 'bx-chevron-up' : 'bx-chevron-down'" class="transition-transform" />
+        <VIcon v-if="!loading || !first" :icon="isExpanded ? 'bx-chevron-up' : 'bx-chevron-down'" class="transition-transform" />
+        <LoadingIcon v-else icon="tail-spin" class="w-6 h-6" />
       </div>
 
       <Transition name="fade-slide">
         <div
           v-if="isExpanded"
-          class="border-t border-gray-200 dark:border-gray-700 divide-y divide-gray-200 dark:divide-gray-700"
+          class="border-t border-gray-200 divide-y divide-gray-200 dark:border-gray-700 dark:divide-gray-700"
         >
           <div
-            v-for="device in devices"
+            v-for="device in dispositivos"
+            v-if="!loading || !first"
             :key="device.id_dispositivo"
-            class="flex items-center justify-between p-4"
+            class="flex justify-between items-center p-4"
           >
-            <div class="flex items-center gap-3">
+            <div class="flex gap-3 items-center">
               <VImg
                 :src="sensorForImages[device.id_dispositivo]"
                 alt="Sensor Image"
-                class="w-12 h-12 bg-white rounded-lg border border-gray-300 dark:border-gray-600 object-contain"
+                class="object-contain w-12 h-12 bg-white rounded-lg border border-gray-300 dark:border-gray-600"
               />
               <div>
                 <h4 class="text-sm font-medium text-gray-800 dark:text-white">{{ device.nombre }}</h4>
@@ -85,7 +91,9 @@ function toggleDeviceList() {
             </div>
 
             <VSwitch
+              :disabled="currentDevice == device.id_dispositivo"
               v-model="device.enabled"
+              @change="toggleDevice(props.sistema.id_empresa, device.id_dispositivo)"
               hide-details
               inset
             />
