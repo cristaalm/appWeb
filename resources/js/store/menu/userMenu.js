@@ -21,11 +21,6 @@ const useMenuStore = defineStore('menu', {
     },
     adminAquanovaMenu() {
       return [
-        {
-          title: 'Panel',
-          icon: 'bx bxs-dashboard',
-          to: '/panel',
-        },
         'Configuración de AquaNova',
         {
           title: 'Usuarios',

@@ -78,7 +78,7 @@ export const routes = [
     children: [
       {
         path: '',
-        component: () => import('@/pages/dashboard/panel.vue'),
+        redirect: '/panel/usuarios',
       },
       {
         path: 'sistemas',
